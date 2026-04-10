@@ -3,57 +3,23 @@ Per-zone shot verification for Fenerbahce 2025-26.
 One half-court per zone showing every shot (make/miss).
 Free throws (zone " ", coords -1,-1) are shown in a separate axes as a bar.
 All shots outside court boundary are excluded.
+
+Zones are coordinate-based (see zone_mapping.py):
+  A = Under basket     B = Left short range   C = Right short range
+  D = Left mid-range   E = Centre mid-range   F = Right mid-range
+  G = Left 3PT         H = Centre 3PT         I = Right 3PT
 """
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-from matplotlib.patches import Arc, Circle
-
-# ── court drawing ─────────────────────────────────────────────────────────────
-
-def draw_half_court(ax, color="#555577", lw=1.4):
-    paint_w, paint_h = 490, 580
-
-    ax.plot([-750, 750, 750, -750, -750], [0, 0, 1400, 1400, 0], color=color, lw=lw)
-
-    basket = Circle((0, 0), radius=22, linewidth=lw, color=color, fill=False)
-    ax.add_patch(basket)
-    ax.plot([-90, 90], [-15, -15], color=color, lw=lw)  # backboard
-
-    rect = patches.Rectangle(
-        (-paint_w / 2, 0), paint_w, paint_h,
-        linewidth=lw, edgecolor=color, facecolor="none",
-    )
-    ax.add_patch(rect)
-
-    # Free-throw circle — bottom half only (stays inside key)
-    ft_arc = Arc(
-        (0, paint_h), width=360, height=360, angle=0,
-        theta1=180, theta2=360, color=color, lw=lw,
-    )
-    ax.add_patch(ft_arc)
-
-    # 3-point arc + corner lines
-    three_arc = Arc(
-        (0, 0), width=675 * 2, height=675 * 2, angle=0,
-        theta1=12, theta2=168, color=color, lw=lw,
-    )
-    ax.add_patch(three_arc)
-    ax.plot([-660, -660], [0, 90], color=color, lw=lw)
-    ax.plot([660, 660], [0, 90], color=color, lw=lw)
-
-    ax.set_xlim(-800, 800)
-    ax.set_ylim(-150, 1450)
-    ax.set_aspect("equal")
-    ax.axis("off")
-
+from zone_mapping import ZONE_LABELS, remap_zones
+from utils_plot import BG, PANEL_BG, RED, GREEN, GOLD, draw_half_court
 
 # ── load data ─────────────────────────────────────────────────────────────────
 
 shots = pd.read_csv("fenerbahce_shots_2025_26.csv")
-fen = shots[shots["TEAM"] == "ULK"].copy()
+fen = remap_zones(shots[shots["TEAM"] == "ULK"].copy())
 fen["made"] = fen["POINTS"] > 0
 
 # Field goal attempts only — exclude zone " " (FT placeholder at -1,-1)
@@ -85,12 +51,6 @@ print(f"Free throws (boxscore): {ft_made}/{ft_att}  ({ft_pct:.1f}%)")
 n_cols = 4
 n_rows = int(np.ceil((n_zones + 1) / n_cols))  # +1 for FT panel
 
-BG       = "#1a1a2e"
-PANEL_BG = "#16213e"
-RED      = "#e05252"
-GREEN    = "#52c77f"
-GOLD     = "#FFD700"
-
 fig, axes = plt.subplots(n_rows, n_cols, figsize=(n_cols * 5, n_rows * 6))
 fig.patch.set_facecolor(BG)
 axes_flat = axes.flatten()
@@ -110,9 +70,10 @@ for idx, zone in enumerate(zones):
                c=GREEN, s=18, alpha=0.70, label="Make", zorder=3)
 
     pct = makes.shape[0] / z.shape[0] * 100 if z.shape[0] > 0 else 0
+    label = ZONE_LABELS.get(zone, zone)
     ax.set_title(
-        f"Zone {zone}   {pct:.1f}%  (n={len(z)})",
-        color="white", fontsize=11, fontweight="bold", pad=6,
+        f"{zone}: {label}   {pct:.1f}%  (n={len(z)})",
+        color="white", fontsize=10, fontweight="bold", pad=6,
     )
     ax.legend(loc="upper right", fontsize=7, facecolor=PANEL_BG,
               labelcolor="white", edgecolor="none", markerscale=1.2)

@@ -1,0 +1,7 @@
+INHERIT: mkdocs.yml
+
+# Serve-only override: disables the PDF plugin so mkdocs serve works without
+# the GTK/WeasyPrint native libraries being installed on the system.
+# Use `mkdocs build` (with GTK installed) to generate the PDF.
+plugins:
+  - search

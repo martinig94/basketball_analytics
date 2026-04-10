@@ -1,0 +1,54 @@
+site_name: Fenerbahce Beko Istanbul — Scouting Report
+site_description: EuroLeague 2025-2026 Scouting Report
+docs_dir: docs
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: custom
+    accent: custom
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - toc.integrate
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - attr_list
+  - md_in_html
+
+plugins:
+  - search
+  - with-pdf:
+      author: Basketball Analytics
+      copyright: "EuroLeague 2025-2026"
+      cover: true
+      cover_title: SCOUTING REPORT
+      cover_subtitle: "Fenerbahce Beko Istanbul | EuroLeague 2025-2026"
+      toc_title: Table of Contents
+      heading_shift: false
+      toc_level: 3
+      ordered_chapter_level: 2
+      output_path: pdf/scouting_report.pdf
+
+nav:
+  - Cover: index.md
+  - "General Information": section-a-general-information.md
+  - "Roster & Player Profiles": section-b-roster-players.md
+  - "Offensive Analysis": section-c-offensive-analysis.md
+  - "Defensive Analysis": section-d-defensive-analysis.md
+  - "Transition Play": section-e-transition-play.md
+  - "Special Situations / Clutch Time": section-f-special-situations.md
+  - "Recommended Game Plan": section-g-game-plan.md
+  - "Appendix — Detailed Box Scores": appendix-box-scores.md

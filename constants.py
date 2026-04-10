@@ -1,0 +1,2 @@
+TEAM   = "ULK"
+SEASON = 2025
