@@ -1,0 +1,61 @@
+name: Run main.py and deploy MkDocs site
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 8 * * *'  # 9:00, 12:00, 18:00 Rome time
+  workflow_dispatch:
+
+permissions:
+  contents: write  # ✅ allow pushing changes back
+
+jobs:
+  run-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # ✅ needed to allow pushing and pulling
+
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install mkdocs mkdocs-material
+
+
+      - name: Run main script
+        run: |
+          python main.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage everything first (so rebase won't fail)
+          git add -A
+
+          # Fetch and rebase on the latest remote changes
+          git fetch origin ${{ github.ref_name }}
+          git rebase origin/${{ github.ref_name }} || true
+
+          # Commit if there are any changes
+          git commit -m "Auto-update from main.py" || echo "No changes to commit"
+
+          # Push using the GITHUB_TOKEN
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+
+      - name: Deploy MkDocs site
+        run: |
+          mkdocs gh-deploy --force
