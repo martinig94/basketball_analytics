@@ -71,8 +71,8 @@ def load_gamecodes(season: int, team: Optional[str]= None) -> pd.DataFrame:
     """
       # noqa: PLC0415
 
-    base = EuroLeagueData()
-    games = base.get_gamecodes_season(season)
+    bb = EuroLeagueData()
+    games = bb.get_gamecodes_season(season)
     if team is not None:
         games = games[
             (games["homecode"] == team) | (games["awaycode"] == team)
@@ -1028,3 +1028,11 @@ def get_ranking(season: int, team:str):
     ranking_team = ranking[ranking['club.code'] == team]
     return ranking_team[['position', 'positionChange', 'gamesPlayed',
        'qualified', 'pointsDifference', 'lastTenRecord', 'last5Form']]
+
+
+def _short_name(full_name: str) -> str:
+    """Return a display-friendly surname from a 'SURNAME, Firstname' string."""
+    surname = full_name.split(",")[0].strip()
+    # Preserve known all-caps tokens (roman numerals, generational suffixes)
+    _keep = {"II", "III", "IV", "JR", "SR"}
+    return " ".join(p if p in _keep else p.title() for p in surname.split())

@@ -9,9 +9,8 @@ analysis scripts; these functions operate on a single ``Axes`` object.
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
 from matplotlib.axes import Axes
-from matplotlib.patches import Arc, Circle
+from matplotlib.patches import Arc, Circle, Rectangle
 from zone_mapping import (
     CORNER_X,
     CORNER_Y,
@@ -21,6 +20,9 @@ from zone_mapping import (
     ZONE_LABELS,
 )
 
+from utils_euroleague import _short_name
+
+import math
 # ── colour palette ─────────────────────────────────────────────────────────────
 
 BG: str       = "#1a1a2e"
@@ -38,36 +40,81 @@ TITLE_KW: dict = dict(color="white", fontsize=13, fontweight="bold", pad=10)
 
 
 def draw_half_court(ax: Axes, color: str = "#555577", lw: float = 1.4) -> None:
-    """Draw a EuroLeague half-court outline on *ax*.
+    """Draw a FIBA/EuroLeague half-court on *ax*.
 
-    Origin is the basket centre; units are centimetres.  The function sets
-    axis limits, aspect ratio, and turns the axis off.
+    Origin is the basket centre; units are centimetres.  All dimensions
+    follow FIBA Official Basketball Rules.  Court elements are built as
+    individual patches — hoop, backboard, key, free-throw arcs, restricted
+    area, three-point line, boundary, centre circle — mirroring the
+    structure of the classic NBA patch-based court template but rescaled to
+    FIBA dimensions.  The function sets axis limits, aspect ratio, and turns
+    the axis off.
 
     Args:
         ax: Matplotlib axes to draw on.
         color: Line colour for all court markings.
         lw: Line width for all court markings.
     """
-    paint_w, paint_h = 490, 580
+    # Basket rim – FIBA internal diameter 450 mm → radius 22.5 cm
+    hoop = Circle((0, 0), radius=22.5, linewidth=lw, color=color, fill=False)
 
-    ax.plot([-750, 750, 750, -750, -750], [0, 0, 1400, 1400, 0], color=color, lw=lw)
-    ax.add_patch(Circle((0, 0), radius=22, linewidth=lw, color=color, fill=False))
-    ax.plot([-90, 90], [-15, -15], color=color, lw=lw)
+    # Backboard – 1.83 m wide, drawn as a thin filled bar
+    backboard = Rectangle((-91.5, -20), 183, -4, linewidth=lw, color=color)
 
-    ax.add_patch(patches.Rectangle(
-        (-paint_w / 2, 0), paint_w, paint_h,
-        linewidth=lw, edgecolor=color, facecolor="none",
-    ))
-    ax.add_patch(Arc(
-        (0, paint_h), width=360, height=360, angle=0,
-        theta1=180, theta2=360, color=color, lw=lw,
-    ))
-    ax.add_patch(Arc(
-        (0, 0), width=675 * 2, height=675 * 2, angle=0,
-        theta1=12, theta2=168, color=color, lw=lw,
-    ))
-    ax.plot([-660, -660], [0, 90], color=color, lw=lw)
-    ax.plot([660, 660],   [0, 90], color=color, lw=lw)
+    # Key / paint – 4.90 m wide.
+    # Depth is measured from the basket (y=0), not from the endline:
+    #   FIBA FT-line is 5.80 m from the endline, and the basket centre is
+    #   1.575 m from the endline → FT line is 4.225 m = 422 cm from basket.
+    ft_y = 422
+    paint = Rectangle(
+        (-245, 0), 490, ft_y, linewidth=lw, edgecolor=color, facecolor="none",
+    )
+
+    # Free-throw arcs (radius 1.80 m, centre at the free-throw line).
+    # Solid toward the basket; dashed inside the key.
+    ft_top = Arc(
+        (0, ft_y), 360, 360, theta1=0, theta2=180, linewidth=lw, color=color,
+    )
+    ft_bottom = Arc(
+        (0, ft_y), 360, 360, theta1=180, theta2=0,
+        linewidth=lw, color=color, linestyle="dashed",
+    )
+
+    # No-charge restricted-area arc – 1.25 m radius from basket centre
+    restricted = Arc(
+        (0, 0), 250, 250, theta1=0, theta2=180, linewidth=lw, color=color,
+    )
+
+    # Corner three-point lines – 6.60 m from court centre-line, 0.90 m long
+    # (FIBA: the parallel segment and the arc do not physically meet;
+    #  the arc begins at y ≈ 141 cm when x = 660 cm)
+    corner_left  = Rectangle((-660, 0), 0, 90, linewidth=lw, color=color)
+    corner_right = Rectangle(( 660, 0), 0, 90, linewidth=lw, color=color)
+
+    # Three-point arc – 6.75 m radius; theta values tuned to align with
+    # the corner lines at x = ±660 cm (theta ≈ 12° where the arc crosses x = 660)
+    three_arc = Arc(
+        (0, 0), 1350, 1350, theta1=12, theta2=168, linewidth=lw, color=color,
+    )
+
+    # Half-court boundary – 15.0 m wide × 14.0 m deep
+    boundary = Rectangle(
+        (-750, 0), 1500, 1400, linewidth=lw, edgecolor=color, facecolor="none",
+    )
+
+    # Half-court centre circle – FIBA diameter 3.60 m; lower semicircle only
+    centre_circle = Arc(
+        (0, 1400), 360, 360, theta1=180, theta2=0, linewidth=lw, color=color,
+    )
+
+    for element in [
+        hoop, backboard, paint,
+        ft_top, ft_bottom,
+        restricted,
+        corner_left, corner_right, three_arc,
+        boundary, centre_circle,
+    ]:
+        ax.add_patch(element)
 
     ax.set_xlim(-800, 800)
     ax.set_ylim(-150, 1450)
@@ -521,3 +568,91 @@ def plot_fastbreak_per_quarter(ax: Axes, fb_q: pd.DataFrame) -> None:
     )
     ax.tick_params(colors="white")
     ax.spines[:].set_visible(False)
+
+
+def make_fig1_eoq(eoq_stats, eoq_by_period, team_name, season) -> plt.Figure:
+    """End-of-quarter shooting: bar chart of top shooters + FG% heatmap by period.
+
+    Args:
+        eoq_stats: Output of ``prepare_eoq_stats``.
+        eoq_by_period: Output of ``prepare_eoq_by_period``.
+
+    Returns:
+        Matplotlib Figure.
+    """
+    fig, (ax_bar, ax_heat) = plt.subplots(1, 2, figsize=(16, 7))
+    fig.patch.set_facecolor(BG)
+    fig.suptitle(
+        f"{team_name} — EuroLeague {season}-{season+1}  |  End-of-Quarter Shooting",
+        color="white", fontsize=15, fontweight="bold", y=1.01,
+    )
+    plot_eoq_shooters(ax_bar, eoq_stats)
+    plot_eoq_heatmap(ax_heat, eoq_by_period)
+    fig.tight_layout()
+    return fig
+
+
+
+
+
+def heatmap_shot_team(shots, team):
+    # Team heatmap
+    _fig, _ax = plt.subplots(figsize=(8, 9), facecolor=BG)
+    _ax.set_facecolor(PANEL_BG)
+    plot_zone_heatmap(_ax, shots, title=f"{team} — Shot Zone Heatmap")
+    _fig.savefig(
+        "docs/images/zone_heatmap_team.png",
+        dpi=150, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+    )
+    plt.close(_fig)
+
+def heatmap_shot_players(shots, players_data, team:str="MIX"):
+    # Multi-player grid heatmap (colorbar omitted; use individual files for scale)
+    _n = len(players_data)
+    _cols = 3
+    _rows = math.ceil(_n / _cols)
+    _fig, _axes = plt.subplots(
+        _rows, _cols,
+        figsize=(_cols * 5.5, _rows * 6.5),
+        facecolor=BG,
+    )
+    _axes_flat = _axes.ravel() if _n > 1 else [_axes]
+
+    for _i, _player in enumerate(players_data):
+        _ax = _axes_flat[_i]
+        _ax.set_facecolor(PANEL_BG)
+        _player_shots = shots[shots["PLAYER"] == _player["name"]]
+        plot_zone_heatmap(
+            _ax,
+            _player_shots,
+            title=f"#{_player['dorsal']} {_short_name(_player['name'])}",
+            colorbar=False,
+        )
+
+    for _ax in _axes_flat[_n:]:
+        _ax.set_visible(False)
+
+    _fig.tight_layout(pad=1.5)
+    _fig.savefig(
+        "docs/images/zone_heatmap_players.png",
+        dpi=150, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+    )
+    plt.close(_fig)
+
+    # Individual player heatmaps  —  {TEAM}_heatmap_player_{num}.png
+    # num=1 → top player by minutes, num=2 → second, etc.
+    for _num, _player in enumerate(players_data, start=1):
+        _fig, _ax = plt.subplots(figsize=(7, 9), facecolor=BG)
+        _ax.set_facecolor(PANEL_BG)
+        _player_shots = shots[shots["PLAYER"] == _player["name"]]
+        plot_zone_heatmap(
+            _ax,
+            _player_shots,
+            title=f"{_short_name(_player['name'])} — #{_player['dorsal']}",
+            colorbar=True,
+        )
+        _fig.savefig(
+            f"docs/images/{team}_heatmap_player_{_num}.png",
+            dpi=150, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+        )
+        plt.close(_fig)

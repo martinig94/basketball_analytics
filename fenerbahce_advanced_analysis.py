@@ -13,7 +13,8 @@ Notes:
 import matplotlib.pyplot as plt
 
 from utils_euroleague import (
-    load_shots,
+load_gamecodes,
+    load_or_fetch_shots,
     prepare_eoq_stats,
     prepare_eoq_by_period,
     prepare_fastbreak_per_quarter,
@@ -24,7 +25,11 @@ from utils_plot import (
     plot_eoq_heatmap,
     plot_situation_shotchart,
     plot_fastbreak_per_quarter,
+    make_fig1_eoq
+
 )
+
+from constants import SEASON, TEAM
 
 # ── constants ─────────────────────────────────────────────────────────────────
 
@@ -33,26 +38,7 @@ TEAM = "ULK"
 # ── figure assembly ───────────────────────────────────────────────────────────
 
 
-def make_fig1_eoq(eoq_stats, eoq_by_period) -> plt.Figure:
-    """End-of-quarter shooting: bar chart of top shooters + FG% heatmap by period.
 
-    Args:
-        eoq_stats: Output of ``prepare_eoq_stats``.
-        eoq_by_period: Output of ``prepare_eoq_by_period``.
-
-    Returns:
-        Matplotlib Figure.
-    """
-    fig, (ax_bar, ax_heat) = plt.subplots(1, 2, figsize=(16, 7))
-    fig.patch.set_facecolor(BG)
-    fig.suptitle(
-        "Fenerbahce Beko — EuroLeague 2025-26  |  End-of-Quarter Shooting",
-        color="white", fontsize=15, fontweight="bold", y=1.01,
-    )
-    plot_eoq_shooters(ax_bar, eoq_stats)
-    plot_eoq_heatmap(ax_heat, eoq_by_period)
-    fig.tight_layout()
-    return fig
 
 
 def make_fig2_situation_shotcharts(shots) -> plt.Figure:
@@ -136,7 +122,9 @@ def print_summary(eoq_stats, shots, fb_q) -> None:
 # ── main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    shots = load_shots(TEAM)
+    games = load_gamecodes(SEASON, TEAM)
+    shots = load_or_fetch_shots(games=games, team=TEAM, season=SEASON, cache_path="fenerbahce_shots_2025_26.csv")
+
 
     eoq_stats     = prepare_eoq_stats(shots)
     eoq_by_period = prepare_eoq_by_period(shots)

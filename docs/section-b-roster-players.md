@@ -2,14 +2,28 @@
 
 ## Full Roster
 
-| # | Name | Pos | Nationality | Height | Weight | Age |
-|---|---|---|---|---|---|---|
-| _0_ | _Player Name_ | _PG_ | _Country_ | _0'00"_ | _000 lbs_ | _00_ |
-| _0_ | _Player Name_ | _SG_ | _Country_ | _0'00"_ | _000 lbs_ | _00_ |
-| _0_ | _Player Name_ | _SF_ | _Country_ | _0'00"_ | _000 lbs_ | _00_ |
-| _0_ | _Player Name_ | _PF_ | _Country_ | _0'00"_ | _000 lbs_ | _00_ |
-| _0_ | _Player Name_ | _C_ | _Country_ | _0'00"_ | _000 lbs_ | _00_ |
+## Full Roster
 
+| #  | Name | Pos | Nationality | Height | Weight | Age |
+|----|---|---|---|---|---|---|
+| 00 | Armando Bacot | C/F | USA | 6'10" | 240 lbs | 25 |
+| 1  | Metecan Birsen | SF | Turkey | 6'7" | 210 lbs | 25 |
+| 2  | Wade Baldwin IV | PG | USA | 6'3" | 194 lbs | 28 |
+| 4  | Nicolo Melli | PF | Italy | 6'9" | 220 lbs | 35 |
+| 5  | Brandon Boston Jr. | SG | USA | 6'6" | 190 lbs | 23 |
+| 8  | Talen Horton-Tucker | SG | USA | 6'4" | 230 lbs | 24 |
+| 12 | Nando De Colo | SG | France | 6'4" | 196 lbs | 38 |
+| 13 | Tarik Biberović | SF | Bosnia | 6'8" | 205 lbs | 22 |
+| 14 | Melih Mahmutoğlu | PG | Turkey | 6'2" | 185 lbs | 32 |
+| 17 | Onuralp Bitim | SF | Turkey | 6'6" | 210 lbs | 25 |
+| 18 | Mikael Jantunen | SF | Finland | 6'7" | 220 lbs | 25 |
+| 20 | Devon Hall | SG | USA | 6'5" | 200 lbs | 29 |
+| 25 | Chris Silva | PF | USA | 6'8" | 235 lbs | 29 |
+| 30 | Jilson Bango | C | Angola | 7'0" | 238 lbs | 26 |
+| 32 | Arturs Zagars | PG | Latvia | 6'3" | 185 lbs | 22 |
+| 50 | Bonzie Colson | PF | USA | 6'6" | 225 lbs | 28 |
+| 92 | Khem Birch | C | Canada | 6'9" | 233 lbs | 32 |
+---
 ---
 
 ## Key Player Profiles
@@ -33,7 +47,7 @@
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
 ---
-
+![alt text](images/ULK_heatmap_player_1.png)
 <!-- START_TABLE PLAYER-2-HEADER -->
 ### BIBEROVIC, TARIK — #13
 <!-- END_TABLE PLAYER-2-HEADER -->
@@ -53,7 +67,7 @@
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
 ---
-
+![alt text](images/ULK_heatmap_player_2.png)
 <!-- START_TABLE PLAYER-3-HEADER -->
 ### HORTON TUCKER, TALEN — #8
 <!-- END_TABLE PLAYER-3-HEADER -->
@@ -74,6 +88,8 @@
 
 ---
 
+![alt text](images/ULK_heatmap_player_3.png)
+
 <!-- START_TABLE PLAYER-4-HEADER -->
 ### HALL, DEVON — #20
 <!-- END_TABLE PLAYER-4-HEADER -->
@@ -93,7 +109,7 @@
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
 ---
-
+![alt text](images/ULK_heatmap_player_4.png)
 <!-- START_TABLE PLAYER-5-HEADER -->
 ### MELLI, NICOLO — #4
 <!-- END_TABLE PLAYER-5-HEADER -->
@@ -111,3 +127,5 @@
 
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
+---
+![alt text](images/ULK_heatmap_player_1.png)

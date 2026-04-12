@@ -50,7 +50,7 @@ _Describe the play: ball movement, screens, options, and who typically finishes.
 !!! danger "Defensive Priority"
     _How to stop this entry — switching rules, help coverage, communication keys._
 
----
+![alt text](images/ULK_heatmap_player_1.png)
 
 ### Entry 2 — _Name / Label_
 
@@ -59,8 +59,9 @@ _Describe the play: ball movement, screens, options, and who typically finishes.
 !!! danger "Defensive Priority"
     _How to stop this entry._
 
----
 
+---
+![alt text](images/ULK_heatmap_player_2.png)
 ### Entry 3 — _Name / Label_
 
 _Describe the play: ball movement, screens, options, and who typically finishes._

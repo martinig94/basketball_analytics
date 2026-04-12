@@ -4,6 +4,10 @@ Run this script before ``mkdocs build`` to populate the markdown files with
 live data from the EuroLeague API and local CSV caches.
 """
 
+import math
+
+import matplotlib.pyplot as plt
+
 from zone_mapping import remap_zones
 
 from constants import SEASON, TEAM
@@ -24,9 +28,16 @@ from utils_euroleague import (
     team_offense_stats,
     top_players_profile,
     zone_distribution_table,
-    get_ranking
+    get_ranking,
+prepare_eoq_stats,
+prepare_eoq_by_period,
 )
+from utils_css import write_team_css
 from utils_markdown import update_content_in_file, update_table_in_file
+from utils_plot import BG, heatmap_shot_team, heatmap_shot_players, make_fig1_eoq
+# ── per-team CSS ──────────────────────────────────────────────────────────────
+
+write_team_css(TEAM, "docs/stylesheets/extra.css")
 
 # ── shared data ───────────────────────────────────────────────────────────────
 
@@ -70,7 +81,9 @@ update_table_in_file(
 
 # ── section-b-roster-players.md ───────────────────────────────────────────────
 
-for i, player in enumerate(top_players_profile(box, games, TEAM), start=1):
+players_data = top_players_profile(box, games, TEAM)
+
+for i, player in enumerate(players_data, start=1):
     update_content_in_file(
         "docs/section-b-roster-players.md",
         f"### {player['name']} — #{player['dorsal']}",
@@ -102,7 +115,20 @@ update_table_in_file(
     fastbreak_stats(shots),
     "FASTBREAK-STATS",
 )
+# ── section-f-special-situations.md ─────────────────────────────────────────────
 
+update_table_in_file(
+    "docs/section-e-transition-play.md",
+    fastbreak_stats(shots),
+    "FASTBREAK-STATS",
+)
+eoq_stats = prepare_eoq_stats(shots)
+eoq_by_period = prepare_eoq_by_period(shots)
+
+
+fig1 = make_fig1_eoq(eoq_stats, eoq_by_period, team_name=TEAM, season=SEASON)
+fig1.savefig("docs/images/eoq_image.png", dpi=150, bbox_inches="tight", facecolor=BG)
+print("Saved -> eoq_image.png")
 # ── appendix-box-scores.md ───────────────────────────────────────────────────
 
 update_content_in_file(
@@ -110,3 +136,7 @@ update_content_in_file(
     last_n_game_sections(box, games, TEAM),
     "APPENDIX-LAST-5",
 )
+
+# ── zone heatmaps ─────────────────────────────────────────────────────────────
+heatmap_shot_team(shots, TEAM)
+heatmap_shot_players(shots, players_data, TEAM)

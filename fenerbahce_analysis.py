@@ -16,11 +16,11 @@ import matplotlib.pyplot as plt
 from zone_mapping import remap_zones
 from utils_euroleague import (
     load_gamecodes,
-    load_shot_data,
+    load_or_fetch_shots,
     load_boxscore,
     prepare_zone_stats,
     prepare_per_game,
-    prepare_shooting_efficiency,
+    prepare_shooting_efficiency, load_or_fetch_boxscores,
 )
 from utils_plot import (
     BG,
@@ -142,13 +142,13 @@ def print_summary(zone_stats, per_game) -> None:
 
 if __name__ == "__main__":
     print("Loading gamecodes ...")
-    games = load_gamecodes(TEAM, SEASON)
+    games = load_gamecodes(team=TEAM, season=SEASON)
     games_played = int(games["played"].sum())
 
-    shots_all = load_shot_data(games, SEASON)
+    shots_all = load_or_fetch_shots(games=games, season=SEASON, cache_path="fenerbahce_shots_2025_26.csv")
     shots_fen = remap_zones(shots_all[shots_all["TEAM"] == TEAM].copy())
 
-    fen           = load_boxscore(TEAM)
+    fen           = load_or_fetch_boxscores(gamecodes_df=games, season=SEASON, file_name="fenerbahce_boxscores_2025_26.csv")
     fen_qualified = fen[fen["min_float"] > 3]
 
     zone_stats = prepare_zone_stats(shots_fen, fen_qualified)

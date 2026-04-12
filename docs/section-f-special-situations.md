@@ -17,7 +17,7 @@
 ---
 
 ## Last-Minute Play Tendencies
-![alt text](images/eoq_2025_2026.png)
+![alt text](images/eoq_image.png)
 ### With Lead (Last 2 Minutes)
 
 _Describe how Fenerbahce protects a lead: ball security, clock management, foul avoidance, defensive assignments._
