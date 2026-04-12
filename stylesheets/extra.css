@@ -1,0 +1,229 @@
+/* ============================================================
+   Fenerbahce Beko — Scouting Report Theme
+   Color palette extracted from official scouting report PDF
+   ============================================================ */
+
+/* ---- Palette variables ------------------------------------ */
+:root {
+  --fener-yellow:      #FFD700;
+  --fener-navy-dark:   #1A1A2E;
+  --fener-navy-deep:   #00205B;
+  --fener-navy-mid:    #162447;
+  --fener-navy-light:  #0F1F3D;
+  --fener-red:         #E74C3C;
+  --fener-green:       #2ECC71;
+  --fener-white:       #FFFFFF;
+  --fener-gray:        #CCCCCC;
+}
+
+/* ---- Material slate scheme overrides ---------------------- */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:              #FFD700;
+  --md-primary-fg-color--light:       #FFE44D;
+  --md-primary-fg-color--dark:        #CCB000;
+  --md-accent-fg-color:               #FFD700;
+  --md-accent-fg-color--transparent:  rgba(255, 215, 0, 0.1);
+  --md-default-bg-color:              #1A1A2E;
+  --md-default-bg-color--light:       #162447;
+  --md-default-bg-color--lighter:     #0F1F3D;
+  --md-default-bg-color--lightest:    #0D1827;
+  --md-code-bg-color:                 #0F1F3D;
+  --md-typeset-color:                 #FFFFFF;
+  --md-typeset-a-color:               #FFD700;
+}
+
+/* ---- Header ----------------------------------------------- */
+.md-header {
+  background-color: #00205B;
+  border-bottom: 3px solid #FFD700;
+}
+
+.md-header__title {
+  color: #FFD700;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ---- Navigation ------------------------------------------- */
+.md-nav__title {
+  color: #FFD700;
+  background-color: #00205B;
+}
+
+.md-nav__item .md-nav__link--active {
+  color: #FFD700;
+}
+
+/* ---- Typography ------------------------------------------- */
+.md-typeset h1 {
+  color: #FFD700;
+  border-bottom: 2px solid #FFD700;
+  padding-bottom: 0.3em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.md-typeset h2 {
+  color: #FFFFFF;
+  border-left: 4px solid #FFD700;
+  background-color: #162447;
+  padding: 0.45em 0.75em;
+  border-radius: 0 4px 4px 0;
+  margin-top: 1.5em;
+}
+
+.md-typeset h3 {
+  color: #FFD700;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.06em;
+}
+
+/* ---- Tables ----------------------------------------------- */
+.md-typeset table:not([class]) {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85em;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: #00205B;
+  color: #FFD700;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.78em;
+  letter-spacing: 0.05em;
+  padding: 0.7em 1em;
+  border: 1px solid #162447;
+}
+
+.md-typeset table:not([class]) td {
+  padding: 0.55em 1em;
+  border: 1px solid #162447;
+  color: #FFFFFF;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) td {
+  background-color: #162447;
+}
+
+.md-typeset table:not([class]) tr:nth-child(odd) td {
+  background-color: #0F1F3D;
+}
+
+.md-typeset table:not([class]) tr:hover td {
+  background-color: #1E3A6E;
+}
+
+/* ---- Admonitions ------------------------------------------ */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: #FFD700;
+}
+
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+  background-color: rgba(255, 215, 0, 0.12);
+}
+
+.md-typeset .tip > .admonition-title::before,
+.md-typeset .tip > summary::before {
+  color: #FFD700;
+}
+
+.md-typeset .admonition.danger,
+.md-typeset details.danger {
+  border-color: #E74C3C;
+}
+
+.md-typeset .admonition.success,
+.md-typeset details.success {
+  border-color: #2ECC71;
+}
+
+.md-typeset .admonition.info,
+.md-typeset details.info {
+  border-color: #FFD700;
+}
+
+/* ---- Section letter badge --------------------------------- */
+.section-badge {
+  display: inline-block;
+  background-color: #FFD700;
+  color: #1A1A2E;
+  font-weight: 900;
+  font-size: 0.85em;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  margin-right: 0.4em;
+}
+
+/* ---- Cover page (mkdocs-with-pdf) ------------------------- */
+#pdf-cover-page {
+  background-color: #1A1A2E !important;
+  color: #FFFFFF !important;
+}
+
+/* ---- Print / PDF export ----------------------------------- */
+@media print {
+  body,
+  .md-main__inner,
+  .md-content {
+    background-color: #1A1A2E !important;
+    color: #FFFFFF !important;
+  }
+
+  h1 {
+    color: #FFD700 !important;
+    border-bottom: 2px solid #FFD700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    page-break-before: always;
+  }
+
+  h1:first-of-type {
+    page-break-before: avoid;
+  }
+
+  h2 {
+    color: #FFFFFF !important;
+    border-left: 4px solid #FFD700 !important;
+    background-color: #162447 !important;
+    padding: 0.4em 0.75em !important;
+  }
+
+  h3 {
+    color: #FFD700 !important;
+    text-transform: uppercase !important;
+  }
+
+  table th {
+    background-color: #00205B !important;
+    color: #FFD700 !important;
+    border: 1px solid #162447 !important;
+  }
+
+  table tr:nth-child(even) td {
+    background-color: #162447 !important;
+  }
+
+  table tr:nth-child(odd) td {
+    background-color: #0F1F3D !important;
+  }
+
+  table td {
+    color: #FFFFFF !important;
+    border: 1px solid #162447 !important;
+  }
+
+  a {
+    color: #FFD700 !important;
+    text-decoration: none !important;
+  }
+
+  .admonition {
+    border-left-width: 4px !important;
+    background-color: #162447 !important;
+    color: #FFFFFF !important;
+  }
+}
