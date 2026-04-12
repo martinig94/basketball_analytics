@@ -32,19 +32,19 @@
 |:-------------------|:--------|:--------------|
 | Points Per Game    | 79.2    | 11th          |
 | Field Goal %       | 43.9%   | 7th           |
-| 3-Point %          | 35.3%   | 5th           |
+| 3-Point %          | 35.3%   | 4th           |
 | Free Throw %       | 79.3%   | 11th          |
-| Offensive Rebounds | 10.6    | 11th          |
-| Assists            | 16.4    | 13th          |
-| Turnovers          | 13.6    | 17th          |
+| Offensive Rebounds | 10.6    | 10th          |
+| Assists            | 16.4    | 14th          |
+| Turnovers          | 13.6    | 18th          |
 <!-- END_TABLE TEAM-STATS-OFFENSE -->
 ### Defense
 <!-- START_TABLE TEAM-STATS-DIFENSE -->
 | Stat                 |   Value | League Rank   |
 |:---------------------|--------:|:--------------|
 | Opp. Points Per Game |    88   | 1st           |
-| Defensive Rebounds   |    18.4 | 5th           |
-| Steals               |     6.2 | 17th          |
+| Defensive Rebounds   |    18.4 | 4th           |
+| Steals               |     6.2 | 16th          |
 | Blocks               |     3.6 | 4th           |
 <!-- END_TABLE TEAM-STATS-DIFENSE -->
 
