@@ -31,7 +31,7 @@
 <!-- END_TABLE PLAYER-1-HEADER -->
 
 <!-- START_TABLE PLAYER-1-IMAGE -->
-<img src="images/ULK_player_1.png" alt="BALDWIN IV, WADE" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+![BALDWIN IV, WADE headshot](images/images/ULK_player_1.png)
 <!-- END_TABLE PLAYER-1-IMAGE -->
 
 <!-- START_TABLE PLAYER-1-STATS -->
@@ -59,7 +59,7 @@
 <!-- END_TABLE PLAYER-2-HEADER -->
 
 <!-- START_TABLE PLAYER-2-IMAGE -->
-<img src="images/ULK_player_2.png" alt="BIBEROVIC, TARIK" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+![BIBEROVIC, TARIK headshot](images/images/ULK_player_2.png)
 <!-- END_TABLE PLAYER-2-IMAGE -->
 
 <!-- START_TABLE PLAYER-2-STATS -->
@@ -87,7 +87,7 @@
 <!-- END_TABLE PLAYER-3-HEADER -->
 
 <!-- START_TABLE PLAYER-3-IMAGE -->
-<img src="images/ULK_player_3.png" alt="HORTON TUCKER, TALEN" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+![HORTON TUCKER, TALEN headshot](images/images/ULK_player_3.png)
 <!-- END_TABLE PLAYER-3-IMAGE -->
 
 <!-- START_TABLE PLAYER-3-STATS -->
@@ -115,7 +115,7 @@
 <!-- END_TABLE PLAYER-4-HEADER -->
 
 <!-- START_TABLE PLAYER-4-IMAGE -->
-<img src="images/ULK_player_4.png" alt="HALL, DEVON" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+![HALL, DEVON headshot](images/images/ULK_player_4.png)
 <!-- END_TABLE PLAYER-4-IMAGE -->
 
 <!-- START_TABLE PLAYER-4-STATS -->
@@ -143,7 +143,7 @@
 <!-- END_TABLE PLAYER-5-HEADER -->
 
 <!-- START_TABLE PLAYER-5-IMAGE -->
-<img src="images/ULK_player_5.png" alt="MELLI, NICOLO" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+![MELLI, NICOLO headshot](images/images/ULK_player_5.png)
 <!-- END_TABLE PLAYER-5-IMAGE -->
 
 <!-- START_TABLE PLAYER-5-STATS -->
