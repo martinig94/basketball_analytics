@@ -1,2 +1,4 @@
 TEAM   = "ULK"
 SEASON = 2025
+
+DPI=300

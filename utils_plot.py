@@ -21,7 +21,7 @@ from zone_mapping import (
 )
 
 from utils_euroleague import _short_name
-
+from constants import DPI
 import math
 # ── colour palette ─────────────────────────────────────────────────────────────
 
@@ -602,7 +602,7 @@ def heatmap_shot_team(shots, team):
     plot_zone_heatmap(_ax, shots, title=f"{team} — Shot Zone Heatmap")
     _fig.savefig(
         "docs/images/zone_heatmap_team.png",
-        dpi=150, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+        dpi=DPI, bbox_inches="tight", facecolor=_fig.get_facecolor(),
     )
     plt.close(_fig)
 
@@ -635,7 +635,7 @@ def heatmap_shot_players(shots, players_data, team:str="MIX"):
     _fig.tight_layout(pad=1.5)
     _fig.savefig(
         "docs/images/zone_heatmap_players.png",
-        dpi=150, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+        dpi=DPI, bbox_inches="tight", facecolor=_fig.get_facecolor(),
     )
     plt.close(_fig)
 
@@ -653,6 +653,6 @@ def heatmap_shot_players(shots, players_data, team:str="MIX"):
         )
         _fig.savefig(
             f"docs/images/{team}_heatmap_player_{_num}.png",
-            dpi=150, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+            dpi=DPI, bbox_inches="tight", facecolor=_fig.get_facecolor(),
         )
         plt.close(_fig)

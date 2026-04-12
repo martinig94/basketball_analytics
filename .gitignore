@@ -210,5 +210,4 @@ __marimo__/
 .claude/
 
 *.csv
-*.png
 !docs/images/

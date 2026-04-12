@@ -2,8 +2,6 @@
 
 ## Full Roster
 
-## Full Roster
-
 | #  | Name | Pos | Nationality | Height | Weight | Age |
 |----|---|---|---|---|---|---|
 | 00 | Armando Bacot | C/F | USA | 6'10" | 240 lbs | 25 |
@@ -23,7 +21,7 @@
 | 32 | Arturs Zagars | PG | Latvia | 6'3" | 185 lbs | 22 |
 | 50 | Bonzie Colson | PF | USA | 6'6" | 225 lbs | 28 |
 | 92 | Khem Birch | C | Canada | 6'9" | 233 lbs | 32 |
----
+
 ---
 
 ## Key Player Profiles
@@ -31,6 +29,10 @@
 <!-- START_TABLE PLAYER-1-HEADER -->
 ### BALDWIN IV, WADE — #2
 <!-- END_TABLE PLAYER-1-HEADER -->
+
+<!-- START_TABLE PLAYER-1-IMAGE -->
+<img src="images/ULK_player_1.png" alt="BALDWIN IV, WADE" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+<!-- END_TABLE PLAYER-1-IMAGE -->
 
 <!-- START_TABLE PLAYER-1-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
@@ -46,11 +48,19 @@
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
+<!-- START_TABLE PLAYER-1-HEATMAP -->
+![BALDWIN IV, WADE zone heatmap](images/ULK_heatmap_player_1.png)
+<!-- END_TABLE PLAYER-1-HEATMAP -->
+
 ---
-![alt text](images/ULK_heatmap_player_1.png)
+
 <!-- START_TABLE PLAYER-2-HEADER -->
 ### BIBEROVIC, TARIK — #13
 <!-- END_TABLE PLAYER-2-HEADER -->
+
+<!-- START_TABLE PLAYER-2-IMAGE -->
+<img src="images/ULK_player_2.png" alt="BIBEROVIC, TARIK" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+<!-- END_TABLE PLAYER-2-IMAGE -->
 
 <!-- START_TABLE PLAYER-2-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
@@ -66,11 +76,19 @@
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
+<!-- START_TABLE PLAYER-2-HEATMAP -->
+![BIBEROVIC, TARIK zone heatmap](images/ULK_heatmap_player_2.png)
+<!-- END_TABLE PLAYER-2-HEATMAP -->
+
 ---
-![alt text](images/ULK_heatmap_player_2.png)
+
 <!-- START_TABLE PLAYER-3-HEADER -->
 ### HORTON TUCKER, TALEN — #8
 <!-- END_TABLE PLAYER-3-HEADER -->
+
+<!-- START_TABLE PLAYER-3-IMAGE -->
+<img src="images/ULK_player_3.png" alt="HORTON TUCKER, TALEN" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+<!-- END_TABLE PLAYER-3-IMAGE -->
 
 <!-- START_TABLE PLAYER-3-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
@@ -86,13 +104,19 @@
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
----
+<!-- START_TABLE PLAYER-3-HEATMAP -->
+![HORTON TUCKER, TALEN zone heatmap](images/ULK_heatmap_player_3.png)
+<!-- END_TABLE PLAYER-3-HEATMAP -->
 
-![alt text](images/ULK_heatmap_player_3.png)
+---
 
 <!-- START_TABLE PLAYER-4-HEADER -->
 ### HALL, DEVON — #20
 <!-- END_TABLE PLAYER-4-HEADER -->
+
+<!-- START_TABLE PLAYER-4-IMAGE -->
+<img src="images/ULK_player_4.png" alt="HALL, DEVON" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+<!-- END_TABLE PLAYER-4-IMAGE -->
 
 <!-- START_TABLE PLAYER-4-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
@@ -108,11 +132,19 @@
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
+<!-- START_TABLE PLAYER-4-HEATMAP -->
+![HALL, DEVON zone heatmap](images/ULK_heatmap_player_4.png)
+<!-- END_TABLE PLAYER-4-HEATMAP -->
+
 ---
-![alt text](images/ULK_heatmap_player_4.png)
+
 <!-- START_TABLE PLAYER-5-HEADER -->
 ### MELLI, NICOLO — #4
 <!-- END_TABLE PLAYER-5-HEADER -->
+
+<!-- START_TABLE PLAYER-5-IMAGE -->
+<img src="images/ULK_player_5.png" alt="MELLI, NICOLO" width="160" style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />
+<!-- END_TABLE PLAYER-5-IMAGE -->
 
 <!-- START_TABLE PLAYER-5-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
@@ -127,5 +159,7 @@
 
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
----
-![alt text](images/ULK_heatmap_player_1.png)
+
+<!-- START_TABLE PLAYER-5-HEATMAP -->
+![MELLI, NICOLO zone heatmap](images/ULK_heatmap_player_5.png)
+<!-- END_TABLE PLAYER-5-HEATMAP -->

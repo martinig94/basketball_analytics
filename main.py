@@ -35,6 +35,7 @@ prepare_eoq_by_period,
 from utils_css import write_team_css
 from utils_markdown import update_content_in_file, update_table_in_file
 from utils_plot import BG, heatmap_shot_team, heatmap_shot_players, make_fig1_eoq
+from utils_roster import download_player_image, fetch_or_load_rosters, get_player_image_url
 # ── per-team CSS ──────────────────────────────────────────────────────────────
 
 write_team_css(TEAM, "docs/stylesheets/extra.css")
@@ -82,6 +83,7 @@ update_table_in_file(
 # ── section-b-roster-players.md ───────────────────────────────────────────────
 
 players_data = top_players_profile(box, games, TEAM)
+roster = fetch_or_load_rosters(season=SEASON, cache_path="data/rosters_2025.csv")
 
 for i, player in enumerate(players_data, start=1):
     update_content_in_file(
@@ -89,10 +91,36 @@ for i, player in enumerate(players_data, start=1):
         f"### {player['name']} — #{player['dorsal']}",
         f"PLAYER-{i}-HEADER",
     )
+
+    # Player headshot — download from CDN, cache locally, inject into markdown
+    img_dest = f"docs/images/{TEAM}_player_{i}.png"
+    img_url = get_player_image_url(roster, player["name"], TEAM)
+    if img_url and download_player_image(img_url, img_dest):
+        img_md = (
+            f'<img src="images/{TEAM}_player_{i}.png"'
+            f' alt="{player["name"]}"'
+            f' width="160"'
+            f' style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />'
+        )
+    else:
+        img_md = ""
+    update_content_in_file(
+        "docs/section-b-roster-players.md",
+        img_md,
+        f"PLAYER-{i}-IMAGE",
+    )
+
     update_table_in_file(
         "docs/section-b-roster-players.md",
         player["stats_df"],
         f"PLAYER-{i}-STATS",
+    )
+
+    # Zone heatmap for this player
+    update_content_in_file(
+        "docs/section-b-roster-players.md",
+        f"![{player['name']} zone heatmap](images/{TEAM}_heatmap_player_{i}.png)",
+        f"PLAYER-{i}-HEATMAP",
     )
 
 # ── section-c-offensive-analysis.md ──────────────────────────────────────────
