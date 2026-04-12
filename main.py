@@ -96,12 +96,7 @@ for i, player in enumerate(players_data, start=1):
     img_dest = f"docs/images/{TEAM}_player_{i}.png"
     img_url = get_player_image_url(roster, player["name"], TEAM)
     if img_url and download_player_image(img_url, img_dest):
-        img_md = (
-            f'<img src="images/{TEAM}_player_{i}.png"'
-            f' alt="{player["name"]}"'
-            f' width="160"'
-            f' style="float:right;margin:0 0 1em 1.5em;border-radius:6px;" />'
-        )
+        img_md = (f"![{player['name']} headshot](images/images/{TEAM}_player_{i}.png)")
     else:
         img_md = ""
     update_content_in_file(
