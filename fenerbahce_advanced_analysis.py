@@ -143,8 +143,8 @@ if __name__ == "__main__":
     fb_q          = prepare_fastbreak_per_quarter(shots)
 
     fig1 = make_fig1_eoq(eoq_stats, eoq_by_period)
-    fig1.savefig("eoq_2025_26.png", dpi=150, bbox_inches="tight", facecolor=BG)
-    print("Saved -> eoq_2025_26.png")
+    fig1.savefig("eoq_2025_2026.png", dpi=150, bbox_inches="tight", facecolor=BG)
+    print("Saved -> eoq_2025_2026.png")
 
     fig2 = make_fig2_situation_shotcharts(shots)
     fig2.savefig("shot_areas.png", dpi=150, bbox_inches="tight", facecolor=BG)

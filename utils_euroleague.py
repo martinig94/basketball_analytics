@@ -140,6 +140,54 @@ def load_shots(
     fen["quarter"] = fen["MINUTE"].map(QUARTER_MAP).fillna("OT")
     return fen
 
+def load_or_fetch_shots(
+    games: pd.DataFrame,
+    season: int,
+    cache_path: str,
+    team: Optional[str] = None,
+) -> pd.DataFrame:
+    """Load shot data from cache if available, otherwise fetch from API and save.
+
+    Adds ``made``, ``is_ft``, and ``quarter`` columns when ``team`` is provided.
+    Free-throw placeholders (``COORD_X == -1``) are retained but flagged via ``is_ft``.
+
+    Args:
+        games: DataFrame containing a ``gameCode`` column.
+        season: EuroLeague season start year passed to the shot API.
+        cache_path: Path to the CSV cache file.
+        team: Three-letter team code to filter by. When ``None`` all shots are returned
+              without the extra computed columns.
+
+    Returns:
+        DataFrame of shot data, optionally filtered to ``team`` with extra computed columns.
+    """
+    if not os.path.exists(cache_path):
+        print(f"Fetching shot data for {len(games)} games from API...")
+        sd = ShotData()
+        frames = []
+        for _, row in games.iterrows():
+            gc = int(row["gameCode"])
+            try:
+                frames.append(sd.get_game_shot_data(season, gc))
+            except Exception as exc:
+                print(f"  WARNING game {gc}: {exc}")
+        shots = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+        if not shots.empty:
+            os.makedirs(os.path.dirname(cache_path) or ".", exist_ok=True)
+            shots.to_csv(cache_path, index=False)
+            print(f"Saved {len(shots)} rows -> {cache_path}")
+    else:
+        print(f"Loading shot data from cache: {cache_path}")
+        shots = pd.read_csv(cache_path)
+
+    if team is not None:
+        shots = shots[shots["TEAM"] == team].copy()
+        shots["made"] = shots["POINTS"] > 0
+        shots["is_ft"] = shots["COORD_X"] == -1
+        shots["quarter"] = shots["MINUTE"].map(QUARTER_MAP).fillna("OT")
+
+    return shots
+
 def fetch_boxscores(gamecodes_df: pd.DataFrame, season: int , file_name: str, save: bool = True) -> pd.DataFrame:
     """Fetch player boxscore stats for each gamecode and concatenate."""
     bsd = BoxScoreData()
@@ -183,6 +231,56 @@ def load_boxscore(
     clean["min_float"] = clean["Minutes"].apply(_minutes_to_float)
     return clean
 
+def load_or_fetch_boxscores(
+    gamecodes_df: pd.DataFrame,
+    season: int,
+    file_name: str,
+    team: Optional[str] = None,
+    save: bool = True,
+) -> pd.DataFrame:
+    """Load player boxscores from file if it exists, otherwise fetch and save it.
+
+    Args:
+        gamecodes_df: DataFrame with game codes and team info.
+        season: Season year used when fetching from the API.
+        file_name: Path to the CSV file to load from or save to.
+        team: Three-letter team code to filter by. When ``None`` all teams are returned.
+        save: Whether to save the fetched data to ``file_name``.
+
+    Returns:
+        DataFrame of per-player, per-game rows with a ``min_float`` column.
+        Aggregate rows (``Player`` in ``{"Total", "Team"}``) are always removed.
+    """
+    if not os.path.exists(file_name):
+        print(f"File not found — fetching season {season} boxscores...")
+        bsd = BoxScoreData()
+        frames = []
+        for _, row in gamecodes_df.iterrows():
+            gamecode = int(row["gameCode"])
+            print(f"  Season {season} | Game {gamecode}: {row.get('hometeam', '')} vs {row.get('awayteam', '')}")
+            try:
+                df = bsd.get_players_boxscore_stats(season, gamecode)
+                df.insert(0, "season", season)
+                frames.append(df)
+            except Exception as e:
+                print(f"    WARNING: could not fetch gamecode {gamecode}: {e}")
+
+        boxscores = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+        if not boxscores.empty and save:
+            os.makedirs(os.path.dirname(file_name) or ".", exist_ok=True)
+            boxscores.to_csv(file_name, index=False)
+            print(f"Saved {len(boxscores)} rows -> {file_name}")
+    else:
+        print(f"Loading from {file_name}...")
+        boxscores = pd.read_csv(file_name)
+
+    mask = ~boxscores["Player"].isin({"Total", "Team"})
+    if team is not None:
+        mask &= boxscores["Team"] == team
+    clean = boxscores[mask].copy()
+    clean["min_float"] = clean["Minutes"].apply(_minutes_to_float)
+    return clean
 
 # ── data preparation ──────────────────────────────────────────────────────────
 

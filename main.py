@@ -16,7 +16,8 @@ from utils_euroleague import (
     last_n_games,
     load_boxscore,
     load_gamecodes,
-    load_shots,
+    load_or_fetch_boxscores,
+    load_or_fetch_shots,
     season_basic_stats,
     season_record_splits,
     team_defense_stats,
@@ -32,9 +33,9 @@ from utils_markdown import update_content_in_file, update_table_in_file
 games = load_gamecodes(SEASON, TEAM)
 games_all = load_gamecodes(SEASON)
 games = add_winner_team(games)
-box = load_boxscore("fenerbahce_boxscores_2025_26.csv", TEAM)
-box_all = load_boxscore("boxscore_2025.csv")
-shots = remap_zones(load_shots(TEAM, "fenerbahce_shots_2025_26.csv"))
+box = load_or_fetch_boxscores(games, season=SEASON, team=TEAM, file_name="fenerbahce_boxscores_2025_26.csv")
+box_all = load_or_fetch_boxscores(games, season=SEASON, file_name="boxscore_2025.csv")
+shots = remap_zones(load_or_fetch_shots(games=games, team=TEAM, season=SEASON, cache_path="fenerbahce_shots_2025_26.csv"))
 
 # ── index.md ──────────────────────────────────────────────────────────────────
 
