@@ -2,25 +2,25 @@
 
 ## Full Roster
 <!-- START_TABLE ROSTER -->
-|   # | Name                | Pos   | Nationality   | Height         |   Weight |   Age |
-|----:|:--------------------|:------|:--------------|:---------------|---------:|------:|
-|   0 | Armando Bacot Jr.   | C/F   | USA           | 6'10",240 lbs" |       25 |   nan |
-|   1 | Metecan Birsen      | SF    | Turkey        | 6'7",210 lbs"  |       25 |   nan |
-|   2 | Wade Baldwin Iv     | PG    | USA           | 6'3",194 lbs"  |       28 |   nan |
-|   4 | Nicolo Melli        | PF    | Italy         | 6'9",220 lbs"  |       35 |   nan |
-|   5 | Brandon Boston Jr.  | SG    | USA           | 6'6",190 lbs"  |       23 |   nan |
-|   8 | Talen Horton Tucker | SG    | USA           | 6'4",230 lbs"  |       24 |   nan |
-|  12 | Nando De Colo       | SG    | France        | 6'4",196 lbs"  |       38 |   nan |
-|  13 | Tarik Biberovic     | SF    | Bosnia        | 6'8",205 lbs"  |       22 |   nan |
-|  14 | Melih Mahmutoglu    | PG    | Turkey        | 6'2",185 lbs"  |       32 |   nan |
-|  17 | Onuralp Bitim       | SF    | Turkey        | 6'6",210 lbs"  |       25 |   nan |
-|  18 | Mikael Jantunen     | SF    | Finland       | 6'7",220 lbs"  |       25 |   nan |
-|  20 | Devon Hall          | SG    | USA           | 6'5",200 lbs"  |       29 |   nan |
-|  25 | Chris Silva         | PF    | USA           | 6'8",235 lbs"  |       29 |   nan |
-|  30 | Jilson Bango        | C     | Angola        | 7'0",238 lbs"  |       26 |   nan |
-|  32 | Arturs Zagars       | PG    | Latvia        | 6'3",185 lbs"  |       22 |   nan |
-|  50 | Bonzie Colson       | PF    | USA           | 6'6",225 lbs"  |       28 |   nan |
-|  92 | Khem Birch          | C     | Canada        | 6'9",233 lbs"  |       32 |   nan |
+|   # | Name                | Pos   | Nationality   | Height   | Weight   |   Age |
+|----:|:--------------------|:------|:--------------|:---------|:---------|------:|
+|   0 | Armando Bacot Jr.   | C/F   | USA           | 6'10     | 240 lbs  |    25 |
+|   1 | Metecan Birsen      | SF    | Turkey        | 6'7      | 210 lbs  |    25 |
+|   2 | Wade Baldwin Iv     | PG    | USA           | 6'3      | 194 lbs  |    28 |
+|   4 | Nicolo Melli        | PF    | Italy         | 6'9      | 220 lbs  |    35 |
+|   5 | Brandon Boston Jr.  | SG    | USA           | 6'6      | 190 lbs  |    23 |
+|   8 | Talen Horton Tucker | SG    | USA           | 6'4      | 230 lbs  |    24 |
+|  12 | Nando De Colo       | SG    | France        | 6'4      | 196 lbs  |    38 |
+|  13 | Tarik Biberovic     | SF    | Bosnia        | 6'8      | 205 lbs  |    22 |
+|  14 | Melih Mahmutoglu    | PG    | Turkey        | 6'2      | 185 lbs  |    32 |
+|  17 | Onuralp Bitim       | SF    | Turkey        | 6'6      | 210 lbs  |    25 |
+|  18 | Mikael Jantunen     | SF    | Finland       | 6'7      | 220 lbs  |    25 |
+|  20 | Devon Hall          | SG    | USA           | 6'5      | 200 lbs  |    29 |
+|  25 | Chris Silva         | PF    | USA           | 6'8      | 235 lbs  |    29 |
+|  30 | Jilson Bango        | C     | Angola        | 7'0      | 238 lbs  |    26 |
+|  32 | Arturs Zagars       | PG    | Latvia        | 6'3      | 185 lbs  |    22 |
+|  50 | Bonzie Colson       | PF    | USA           | 6'6      | 225 lbs  |    28 |
+|  92 | Khem Birch          | C     | Canada        | 6'9git   | 233 lbs  |    32 |
 <!-- END_TABLE ROSTER -->
 ---
 
