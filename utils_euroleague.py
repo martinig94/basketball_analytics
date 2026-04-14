@@ -841,53 +841,11 @@ def defense_stats_section(
     return pd.DataFrame(rows, columns=["Stat", "Value", "Context"])
 
 
-
-def save_active_roster(
-    box: pd.DataFrame,
-    team: str,
-    top_n: int = 5,
-    data_dir: str = "data",
-) -> None:
-    """Seed *data/active_roster_{team}.csv* from the boxscore if it is absent.
-
-    The CSV is written **only when the file does not already exist**, so that
-    manual edits (e.g. swapping in a specific player) are never overwritten by
-    subsequent runs.  Delete the file to trigger a fresh auto-seed.
-
-    Columns written: ``rank`` (1-based), ``name``, ``dorsal``.
-
-    Args:
-        box: Team boxscore DataFrame (rows already filtered to *team*).
-        team: Three-letter team code used to name the file.
-        top_n: Number of players to seed (ranked by total season minutes).
-        data_dir: Directory in which to write the CSV.
-    """
-    path = Path(data_dir) / f"active_roster_{team}.csv"
-    if path.exists():
-        return
-    path.parent.mkdir(parents=True, exist_ok=True)
-    by_min = (
-        box.groupby("Player")["min_float"]
-        .sum()
-        .sort_values(ascending=False)
-        .head(top_n)
-        .reset_index()
-    )
-    by_min["dorsal"] = by_min["Player"].map(
-        box.drop_duplicates("Player").set_index("Player")["Dorsal"]
-    ).apply(lambda d: str(int(d)) if pd.notna(d) else "—")
-    records = [
-        {"rank": rank, "name": row["Player"], "dorsal": row["dorsal"]}
-        for rank, (_, row) in enumerate(by_min.iterrows(), start=1)
-    ]
-    pd.DataFrame(records).to_csv(path, index=False)
-
-
 def load_active_roster(team: str, data_dir: str = "data") -> list[str]:
     """Return the ordered list of active-roster player names for *team*.
 
-    Reads the CSV written by :func:`save_active_roster`.  This is the shared
-    sub-function used by every function that must restrict results to the
+    Reads the dedicated CSV.
+    This is the shared sub-function used by every function that must restrict results to the
     current squad.
 
     Args:
@@ -895,7 +853,7 @@ def load_active_roster(team: str, data_dir: str = "data") -> list[str]:
         data_dir: Directory containing the CSV.
 
     Returns:
-        Player names in section-B display order (most-minutes first).
+        Player names.
 
     Raises:
         FileNotFoundError: If the CSV has not been created yet.
@@ -904,7 +862,6 @@ def load_active_roster(team: str, data_dir: str = "data") -> list[str]:
     if not path.exists():
         raise FileNotFoundError(
             f"Active roster CSV not found at '{path}'. "
-            "Run save_active_roster() first or create the file manually."
         )
     return pd.read_csv(path)["Name"].tolist()
 

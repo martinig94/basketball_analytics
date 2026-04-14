@@ -22,7 +22,6 @@ from utils_euroleague import (
     load_or_fetch_shots,
     prepare_eoq_by_period,
     prepare_eoq_stats,
-    save_active_roster,
     season_record_splits,
     team_defense_stats,
     team_offense_stats,
@@ -56,10 +55,6 @@ shots = remap_zones(
     )
 )
 
-# ── active roster CSV (seed on first run; manual edits are preserved) ─────────────
-
-save_active_roster(box, TEAM)
-
 # ── section-a-general-information.md ─────────────────────────────────────────
 
 update_table_in_file(
@@ -88,13 +83,7 @@ update_table_in_file(
     "TEAM-STATS-DIFENSE",
 )
 
-# ── section-d-defensive-analysis.md ──────────────────────────────────────────
 
-update_table_in_file(
-    "docs/section-d-defensive-analysis.md",
-    defense_stats_section(box, games, box_all, TEAM),
-    "DEFENSE-STATS-5",
-)
 
 # ── section-b-roster-players.md ───────────────────────────────────────────────
 
@@ -160,7 +149,13 @@ update_table_in_file(
     key_paint_shooters(shots, box, TEAM),
     "KEY-SHOOTERS-PAINT",
 )
+# ── section-d-defensive-analysis.md ──────────────────────────────────────────
 
+update_table_in_file(
+    "docs/section-d-defensive-analysis.md",
+    defense_stats_section(box, games, box_all, TEAM),
+    "DEFENSE-STATS-5",
+)
 # ── section-e-transition-play.md ─────────────────────────────────────────────
 
 update_table_in_file(
