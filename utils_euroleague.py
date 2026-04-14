@@ -1134,6 +1134,105 @@ def player_shooting_eff(box: pd.DataFrame, team: str) -> pd.DataFrame:
     )
 
 
+def clutch_stats(
+    shots_raw: pd.DataFrame,
+    shots: pd.DataFrame,
+    games: pd.DataFrame,
+    team: str,
+) -> pd.DataFrame:
+    """Compute clutch-time statistics for a team.
+
+    A clutch game is any game where the absolute score difference at minute 37
+    is less than 10 points.  Clutch time covers minutes 37–40 of those games.
+
+    The function uses ``POINTS_A`` and ``POINTS_B`` from the raw shot feed to
+    determine the exact score at minute 37, taking the last recorded event
+    (by ``NUM_ANOT``) at or before that minute.  The absolute difference
+    ``|POINTS_A - POINTS_B|`` is used so no team-A/B assignment is needed.
+
+    Args:
+        shots_raw: All teams' shots for the team's games, loaded from the
+            same cache as *shots* but without a team filter.  Must contain
+            ``Gamecode``, ``MINUTE``, ``NUM_ANOT``, ``POINTS_A``,
+            ``POINTS_B`` columns.
+        shots: Team-filtered shot DataFrame (output of
+            :func:`load_or_fetch_shots` with ``team`` set) with ``made``,
+            ``is_ft``, and ``ZONE`` columns.
+        games: Games DataFrame returned by :func:`load_gamecodes` after
+            :func:`add_winner_team`.
+        team: Three-letter team code.
+
+    Returns:
+        DataFrame with columns ``Metric`` and ``Value`` covering clutch
+        record, FG%, 3P%, points-per-game, and the primary clutch scorer.
+    """
+    # ── identify clutch games ─────────────────────────────────────────────────
+    pre37 = shots_raw[
+        shots_raw["MINUTE"].notna() & (shots_raw["MINUTE"] <= 37)
+    ].copy()
+    pre37["MINUTE"] = pre37["MINUTE"].astype(int)
+
+    # Last recorded shot/event per game at or before minute 37
+    last_event = (
+        pre37.sort_values(["Gamecode", "MINUTE", "NUM_ANOT"])
+        .groupby("Gamecode")[["POINTS_A", "POINTS_B"]]
+        .last()
+        .reset_index()
+    )
+    last_event["diff"] = (last_event["POINTS_A"] - last_event["POINTS_B"]).abs()
+    clutch_gcs: set[int] = set(last_event.loc[last_event["diff"] < 10, "Gamecode"])
+
+    # ── W/L record ────────────────────────────────────────────────────────────
+    played = games[games["played"] & games["gameCode"].isin(clutch_gcs)]
+    wins   = int((played["winner"] == team).sum())
+    losses = len(played) - wins
+
+    # ── team clutch shots (min 37-40, field goals only for FG%) ──────────────
+    in_clutch = shots["Gamecode"].isin(clutch_gcs) & shots["MINUTE"].between(37, 40)
+    clutch_fg   = shots[in_clutch & ~shots["is_ft"]]
+    fg_att  = len(clutch_fg)
+    fg_made = int(clutch_fg["made"].sum())
+    fg_pct  = fg_made / fg_att * 100 if fg_att > 0 else 0.0
+
+    threes     = clutch_fg[clutch_fg["ZONE"].isin({"G", "H", "I"})]
+    three_att  = len(threes)
+    three_pct  = int(threes["made"].sum()) / three_att * 100 if three_att > 0 else 0.0
+
+    # Total points scored in clutch time (field goals + free throws)
+    clutch_made  = shots[in_clutch & shots["made"]]
+    total_pts    = int(clutch_made["POINTS"].sum())
+    n_clutch     = max(len(clutch_gcs), 1)
+    pts_per_game = total_pts / n_clutch
+
+    # ── primary clutch scorer (active roster only) ────────────────────────────
+    if not clutch_made.empty:
+        mapping    = _roster_mapping(team, clutch_made["PLAYER"])
+        roster_pts = (
+            clutch_made[clutch_made["PLAYER"].isin(mapping)]
+            .groupby("PLAYER")["POINTS"]
+            .sum()
+        )
+        if not roster_pts.empty:
+            top_box  = roster_pts.idxmax()
+            top_name = mapping[top_box][0]
+            top_pts  = int(roster_pts.max())
+            primary_scorer = f"{top_name} ({top_pts} pts total)"
+        else:
+            primary_scorer = "N/A"
+    else:
+        primary_scorer = "N/A"
+
+    rows = [
+        ("Clutch games",          f"{len(clutch_gcs)}"),
+        ("Record (W-L)",                f"{wins} — {losses}"),
+        ("Clutch FG%",            f"{fg_pct:.1f}%  ({fg_made}/{fg_att})"),
+        ("Clutch 3P%",            f"{three_pct:.1f}%  ({int(threes['made'].sum())}/{three_att})"),
+        ("Clutch Points / Game",  f"{pts_per_game:.1f}"),
+        ("Primary clutch scorer", primary_scorer),
+    ]
+    return pd.DataFrame(rows, columns=["Metric", "Value"])
+
+
 def zone_distribution_table(shots: pd.DataFrame) -> pd.DataFrame:
     """Build a shot-distribution table by zone from remapped shot data.
 

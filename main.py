@@ -10,6 +10,7 @@ from constants import SEASON, TEAM, DPI
 from utils_euroleague import (
     active_roster_table,
     add_winner_team,
+    clutch_stats,
     defense_stats_section,
     fastbreak_stats,
     get_ranking,
@@ -51,6 +52,9 @@ box = load_or_fetch_boxscores(
 )
 box_all = load_or_fetch_boxscores(
     games, season=SEASON, file_name="boxscore_2025.csv"
+)
+shots_raw = load_or_fetch_shots(
+    games=games, season=SEASON, cache_path="fenerbahce_shots_2025_26.csv"
 )
 shots = remap_zones(
     load_or_fetch_shots(
@@ -182,7 +186,13 @@ update_table_in_file(
     "FASTBREAK-STATS",
 )
 
-# ── section-f-special-situations.md (EOQ) ────────────────────────────────────
+# ── section-f-special-situations.md ──────────────────────────────────────────
+
+update_table_in_file(
+    "docs/section-f-special-situations.md",
+    clutch_stats(shots_raw, shots, games, TEAM),
+    "CLUTCH-STATS",
+)
 
 eoq_stats = prepare_eoq_stats(shots)
 eoq_by_period = prepare_eoq_by_period(shots)

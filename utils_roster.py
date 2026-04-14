@@ -6,6 +6,7 @@ report and PDF export.
 """
 
 import os
+import unicodedata
 import urllib.request
 from datetime import date
 from typing import Optional
@@ -14,6 +15,23 @@ import pandas as pd
 from euroleague_api.player_stats import PlayerStats
 
 _REQUIRED_COLS = {"player_code", "player_name", "player_team_code", "player_image_url"}
+
+
+def _normalize(name: str) -> str:
+    """Strip accents and lowercase for accent-insensitive name matching."""
+    return (
+        unicodedata.normalize("NFD", name)
+        .encode("ascii", "ignore")
+        .decode("ascii")
+        .lower()
+        .strip()
+    )
+
+
+def _box_to_display(box_name: str) -> str:
+    """Convert ``'SURNAME, FIRSTNAME'`` to ``'Firstname Surname'``."""
+    parts = box_name.split(", ", 1)
+    return f"{parts[1]} {parts[0]}".title() if len(parts) == 2 else box_name.title()
 
 
 def _calculate_age(birth_date_str: Optional[str]) -> Optional[int]:
@@ -105,13 +123,16 @@ def get_player_image_url(
 ) -> Optional[str]:
     """Look up a player's headshot URL from the roster DataFrame.
 
-    Matching is done on both name and team code so that players on loan do
-    not collide with identically-named players elsewhere.
+    Accepts *player_name* in either display format (``'Firstname Surname'``,
+    as stored in the active-roster CSV) or boxscore format
+    (``'SURNAME, FIRSTNAME'``).  Both sides are normalised (accents stripped,
+    lowercased) before comparison so that e.g. ``'Tarik Biberovic'`` matches
+    the API entry ``'BIBEROVIC, TARIK'``.
 
     Args:
         roster: DataFrame returned by :func:`fetch_or_load_rosters`.
-        player_name: Player name in ``"SURNAME, Firstname"`` format as
-            returned by the boxscore API.
+        player_name: Player display name (``'Firstname Surname'``) or
+            boxscore name (``'SURNAME, FIRSTNAME'``).
         team_code: Three-letter EuroLeague team code.
 
     Returns:
@@ -119,11 +140,16 @@ def get_player_image_url(
     """
     if "player_image_url" not in roster.columns:
         return None
-    mask = (roster["player_name"] == player_name) & (
-        roster["player_team_code"].str.contains(team_code)
-    )
-    matches = roster.loc[mask, "player_image_url"].dropna()
-    return str(matches.iloc[0]) if not matches.empty else None
+    team_rows = roster[
+        roster["player_team_code"].str.contains(team_code, na=False)
+    ]
+    norm_input = _normalize(player_name)
+    for _, row in team_rows.iterrows():
+        if _normalize(_box_to_display(str(row["player_name"]))) == norm_input:
+            url = row["player_image_url"]
+            if pd.notna(url):
+                return str(url)
+    return None
 
 
 def download_player_image(url: str, dest_path: str) -> bool:

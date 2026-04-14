@@ -1,21 +1,23 @@
 # <span class="section-badge">F</span> Special Situations / Clutch Time
 
 ## Clutch Time Performance (Last 4 Minutes)
-
-| Metric | Value |
-|---|---|
-| Record in clutch situations | _W – L_ |
-| Clutch Points Per Possession | _0.000_ |
-| Clutch FG% | _00.0%_ |
-| Clutch 3P% | _00.0%_ |
-| Clutch Turnovers Per Game | _0.0_ |
-| Primary clutch scorer | _Player Name_ |
+<!-- START_TABLE CLUTCH-STATS -->
+| Metric                | Value                              |
+|:----------------------|:-----------------------------------|
+| Clutch games          | 22                                 |
+| Record                | 14 — 8                             |
+| Clutch FG%            | 44.5%  (61/137)                    |
+| Clutch 3P%            | 29.2%  (21/72)                     |
+| Clutch Points / Game  | 10.2                               |
+| Primary clutch scorer | Talen Horton Tucker (56 pts total) |
+<!-- END_TABLE CLUTCH-STATS -->
 
 !!! info "Clutch Identity"
     _Summarize how Fenerbahçe behaves in late-game situations: do they go iso, run sets, push pace, or slow down?_
 
 ---
-
+## Last-Minute Shooters
+![alt text](images/eoq_image.png)
 ## Last-Minute Play Tendencies
 ![alt text](images/eoq_image.png)
 ### With Lead (Last 2 Minutes)
