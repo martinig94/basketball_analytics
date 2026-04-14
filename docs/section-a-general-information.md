@@ -15,7 +15,7 @@
 <!-- START_TABLE RANKING -->
 |   position | positionChange   |   gamesPlayed | qualified   |   pointsDifference | lastTenRecord   | last5Form                 |
 |-----------:|:-----------------|--------------:|:------------|-------------------:|:----------------|:--------------------------|
-|          4 | Down             |            37 | True        |                +48 | 3-7             | ['L', 'L', 'L', 'L', 'L'] |
+|          5 | Down             |            37 | True        |                +48 | 3-7             | ['L', 'L', 'L', 'L', 'L'] |
 <!-- END_TABLE RANKING -->
 
 <!-- START_TABLE SEASON-RECORD -->

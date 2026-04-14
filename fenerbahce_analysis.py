@@ -17,7 +17,6 @@ from zone_mapping import remap_zones
 from utils_euroleague import (
     load_gamecodes,
     load_or_fetch_shots,
-    load_boxscore,
     prepare_zone_stats,
     prepare_per_game,
     prepare_shooting_efficiency, load_or_fetch_boxscores,

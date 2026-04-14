@@ -21,18 +21,17 @@ _Describe Fenerbahce's primary defensive scheme: man-to-man, zone, switching pri
 ---
 
 ## Defensive Statistics — Last 5 Games
-
-| Stat | Value | Context |
-|---|---|---|
-| Opp. Points Per Game | _00.0_ | _Trend: up/down_ |
-| Opp. FG% | _00.0%_ | — |
-| Opp. 3P% | _00.0%_ | — |
-| Opp. Paint Points | _00.0_ | — |
-| Defensive Rebounds | _0.0_ | — |
-| Forced Turnovers | _0.0_ | — |
-| Blocks | _0.0_ | — |
-| Steals | _0.0_ | — |
-
+<!-- START_TABLE DEFENSE-STATS-5 -->
+| Stat                 | Value   | Context           |
+|:---------------------|:--------|:------------------|
+| Opp. Points Per Game | 88.0    | Season avg: 80.7  |
+| Opp. FG%             | 49.8%   | Season avg: 44.2% |
+| Opp. 3-Point %       | 45.0%   | Season avg: 32.7% |
+| Defensive Rebounds   | 18.4    | Season avg: 22.2  |
+| Forced Turnovers     | 13.0    | Season avg: 10.9  |
+| Blocks               | 3.6     | Season avg: 2.8   |
+| Steals               | 6.2     | Season avg: 5.2   |
+<!-- END_TABLE DEFENSE-STATS-5 -->
 ---
 
 ## Defensive Weaknesses

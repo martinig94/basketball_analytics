@@ -30,17 +30,8 @@ markdown_extensions:
 
 plugins:
   - search
-  - with-pdf:
-      author: Basketball Analytics
-      copyright: "EuroLeague 2025-2026"
-      cover: true
-      cover_title: SCOUTING REPORT
-      cover_subtitle: "Fenerbahce Beko Istanbul | EuroLeague 2025-2026"
-      toc_title: Table of Contents
-      heading_shift: false
-      toc_level: 3
-      ordered_chapter_level: 2
-      output_path: pdf/scouting_report.pdf
+  - macros:
+      module_name: macros
 
 nav:
   - Cover: index.md
@@ -51,4 +42,5 @@ nav:
   - "Transition Play": section-e-transition-play.md
   - "Special Situations / Clutch Time": section-f-special-situations.md
   - "Recommended Game Plan": section-g-game-plan.md
+  - "Final remarks": section-h-final_remarks.md
   - "Appendix — Detailed Box Scores": appendix-box-scores.md

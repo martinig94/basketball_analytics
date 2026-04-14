@@ -17,7 +17,6 @@ from zone_mapping import (
     RESTRICTED_R,
     SHORT_RANGE_MAX,
     THREE_PT_RADIUS,
-    ZONE_LABELS,
 )
 
 from utils_euroleague import _short_name

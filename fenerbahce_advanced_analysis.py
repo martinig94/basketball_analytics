@@ -21,15 +21,13 @@ load_gamecodes,
 )
 from utils_plot import (
     BG,
-    plot_eoq_shooters,
-    plot_eoq_heatmap,
     plot_situation_shotchart,
     plot_fastbreak_per_quarter,
     make_fig1_eoq
 
 )
 
-from constants import SEASON, TEAM
+from constants import SEASON
 
 # ── constants ─────────────────────────────────────────────────────────────────
 

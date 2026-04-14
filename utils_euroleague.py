@@ -6,6 +6,7 @@ arguments so the same helpers can be reused across analyses.
 """
 
 import os
+from pathlib import Path
 from typing import Optional
 
 import numpy as np
@@ -26,13 +27,12 @@ QUARTER_MAP: dict[int, str] = {
     **{m: "Q4" for m in range(31, 41)},
 }
 
-EOQ_MINUTES: tuple[int, ...] = (10, 20, 30, 38, 39, 40)
+EOQ_MINUTES: tuple[int, ...] = (10, 20, 30, 39, 40)
 
 EOQ_LABELS: dict[int, str] = {
     10: "End Q1",
     20: "End Q2",
     30: "End Q3",
-    38: "End Q4",
     39: "End Q4",
     40: "End Q4",
 }
@@ -744,22 +744,203 @@ def team_defense_stats(
     return pd.DataFrame(rows, columns=["Stat", "Value", "League Rank"])
 
 
-def top_players_profile(
-    box: pd.DataFrame, games: pd.DataFrame, team: str, top_n: int = 5
-) -> list[dict]:
-    """Return season and last-5 stats for the top *top_n* players by minutes.
+def defense_stats_section(
+    box: pd.DataFrame,
+    games: pd.DataFrame,
+    box_all: pd.DataFrame,
+    team: str,
+    n: int = 5,
+) -> pd.DataFrame:
+    """Compute detailed defensive statistics for the last *n* games.
+
+    Returns both the team's own defensive actions (rebounds, blocks, steals)
+    and the opponent's offensive output (points, FG%, 3P%, turnovers conceded).
+    The **Context** column shows the full-season average so the analyst can
+    gauge whether the recent form is better or worse.
 
     Args:
-        box: DataFrame returned by :func:`load_boxscore`.
-        games: DataFrame returned by :func:`load_gamecodes`.
-        team: Three-letter team code.
-        top_n: Number of players to return.
+        box: Team boxscore from :func:`load_boxscore` (team-filtered).
+        games: Team gamecodes from :func:`load_gamecodes` (team-filtered).
+        box_all: All-player boxscore for every game the team played (both
+            sides), used to derive opponent shooting percentages.
+        team: Three-letter EuroLeague team code.
+        n: Number of most-recent games to use for the *Value* column.
 
     Returns:
-        List of dicts, each with keys ``name`` (str), ``dorsal`` (str), and
-        ``stats_df`` (:class:`~pandas.DataFrame` with columns ``Stat``,
-        ``Season Avg``, ``Last 5 Avg``).
+        DataFrame with columns ``Stat``, ``Value`` (last-n avg),
+        ``Context`` (season avg for comparison).
     """
+    gc_recent = _last_n_gamecodes(games, n)
+    gc_all = _last_n_gamecodes(games, None)
+
+    # ── opponent shooting & turnovers ─────────────────────────────────────────
+    def _opp_avgs(gc_list: list[int]) -> pd.Series:
+        opp = box_all[
+            box_all["Gamecode"].isin(gc_list) & (box_all["Team"] != team)
+        ]
+        return (
+            opp.groupby("Gamecode")
+            .agg(
+                fgm2=("FieldGoalsMade2", "sum"),
+                fga2=("FieldGoalsAttempted2", "sum"),
+                fgm3=("FieldGoalsMade3", "sum"),
+                fga3=("FieldGoalsAttempted3", "sum"),
+                tov=("Turnovers", "sum"),
+            )
+            .mean()
+        )
+
+    opp_r = _opp_avgs(gc_recent)
+    opp_s = _opp_avgs(gc_all)
+
+    def _pct(made: float, att: float) -> float:
+        return made / att * 100 if att > 0 else 0.0
+
+    fg_pct_r  = _pct(opp_r["fgm2"] + opp_r["fgm3"], opp_r["fga2"] + opp_r["fga3"])
+    fg_pct_s  = _pct(opp_s["fgm2"] + opp_s["fgm3"], opp_s["fga2"] + opp_s["fga3"])
+    fg3_pct_r = _pct(opp_r["fgm3"], opp_r["fga3"])
+    fg3_pct_s = _pct(opp_s["fgm3"], opp_s["fga3"])
+
+    # ── own defensive rebounds / blocks / steals ──────────────────────────────
+    def _ulk_avgs(b: pd.DataFrame) -> pd.Series:
+        return (
+            b.groupby("Gamecode")
+            .agg(
+                drb=("DefensiveRebounds", "sum"),
+                stl=("Steals", "sum"),
+                blk=("BlocksFavour", "sum"),
+            )
+            .mean()
+        )
+
+    ulk_r = _ulk_avgs(box[box["Gamecode"].isin(gc_recent)])
+    ulk_s = _ulk_avgs(box)
+
+    # ── opponent points per game from scorelines ──────────────────────────────
+    def _opp_ppg(gc_list: list[int]) -> float:
+        played = games[games["played"]]
+        recent = played[played["gameCode"].isin(gc_list)]
+        scores = [
+            row["awayscore"] if row["homecode"] == team else row["homescore"]
+            for _, row in recent.iterrows()
+        ]
+        return float(np.mean(scores)) if scores else 0.0
+
+    ppg_r = _opp_ppg(gc_recent)
+    ppg_s = _opp_ppg(gc_all)
+
+    rows = [
+        ("Opp. Points Per Game", f"{ppg_r:.1f}",        f"Season avg: {ppg_s:.1f}"),
+        ("Opp. FG%",             f"{fg_pct_r:.1f}%",    f"Season avg: {fg_pct_s:.1f}%"),
+        ("Opp. 3-Point %",       f"{fg3_pct_r:.1f}%",   f"Season avg: {fg3_pct_s:.1f}%"),
+        ("Defensive Rebounds",   f"{ulk_r['drb']:.1f}", f"Season avg: {ulk_s['drb']:.1f}"),
+        ("Forced Turnovers",     f"{opp_r['tov']:.1f}", f"Season avg: {opp_s['tov']:.1f}"),
+        ("Blocks",               f"{ulk_r['blk']:.1f}", f"Season avg: {ulk_s['blk']:.1f}"),
+        ("Steals",               f"{ulk_r['stl']:.1f}", f"Season avg: {ulk_s['stl']:.1f}"),
+    ]
+    return pd.DataFrame(rows, columns=["Stat", "Value", "Context"])
+
+
+
+def save_active_roster(
+    box: pd.DataFrame,
+    team: str,
+    top_n: int = 5,
+    data_dir: str = "data",
+) -> None:
+    """Seed *data/active_roster_{team}.csv* from the boxscore if it is absent.
+
+    The CSV is written **only when the file does not already exist**, so that
+    manual edits (e.g. swapping in a specific player) are never overwritten by
+    subsequent runs.  Delete the file to trigger a fresh auto-seed.
+
+    Columns written: ``rank`` (1-based), ``name``, ``dorsal``.
+
+    Args:
+        box: Team boxscore DataFrame (rows already filtered to *team*).
+        team: Three-letter team code used to name the file.
+        top_n: Number of players to seed (ranked by total season minutes).
+        data_dir: Directory in which to write the CSV.
+    """
+    path = Path(data_dir) / f"active_roster_{team}.csv"
+    if path.exists():
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    by_min = (
+        box.groupby("Player")["min_float"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(top_n)
+        .reset_index()
+    )
+    by_min["dorsal"] = by_min["Player"].map(
+        box.drop_duplicates("Player").set_index("Player")["Dorsal"]
+    ).apply(lambda d: str(int(d)) if pd.notna(d) else "—")
+    records = [
+        {"rank": rank, "name": row["Player"], "dorsal": row["dorsal"]}
+        for rank, (_, row) in enumerate(by_min.iterrows(), start=1)
+    ]
+    pd.DataFrame(records).to_csv(path, index=False)
+
+
+def load_active_roster(team: str, data_dir: str = "data") -> list[str]:
+    """Return the ordered list of active-roster player names for *team*.
+
+    Reads the CSV written by :func:`save_active_roster`.  This is the shared
+    sub-function used by every function that must restrict results to the
+    current squad.
+
+    Args:
+        team: Three-letter team code.
+        data_dir: Directory containing the CSV.
+
+    Returns:
+        Player names in section-B display order (most-minutes first).
+
+    Raises:
+        FileNotFoundError: If the CSV has not been created yet.
+    """
+    path = Path(data_dir) / f"active_roster_{team}.csv"
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Active roster CSV not found at '{path}'. "
+            "Run save_active_roster() first or create the file manually."
+        )
+    return pd.read_csv(path)["Name"].tolist()
+
+
+def top_players_profile(
+    box: pd.DataFrame,
+    games: pd.DataFrame,
+    team: str,
+    criterion: str = "pts",
+    top_n: int | None = None,
+) -> list[dict]:
+    """Return season and last-5 stats for players in the active roster CSV.
+
+    The *selection* of players is driven by
+    ``data/active_roster_{team}.csv`` (created by :func:`save_active_roster`
+    and editable by hand).  Stats are computed fresh from *box* each run.
+    Pass *top_n* to cap the number of profiles returned (e.g. 5 for section-B,
+    9 for the heatmap grid); ``None`` returns every player in the CSV.
+
+    Args:
+        box: Boxscore DataFrame filtered to *team*.
+        games: DataFrame returned by :func:`load_gamecodes`.
+        team: Three-letter team code — used to locate the roster CSV.
+        criterion: Statistic to use for ranking.
+        top_n: Maximum number of players to return.
+            Defaults to ``None`` (all rows in the CSV).
+
+    Returns:
+        List of dicts in CSV order, each with keys ``name`` (str),
+        ``dorsal`` (str), and ``stats_df`` (:class:`~pandas.DataFrame`
+        with columns ``Stat``, ``Season Avg``, ``Last 5 Avg``).
+
+    """
+    roster_df = pd.read_csv(Path("data") / f"active_roster_{team}.csv")
+    player_names: list[str] = roster_df["Name"].tolist()
+    dorsal_map: dict[str, str] = roster_df.set_index("Name")["#"].astype(str).to_dict()
     gc_last5 = _last_n_gamecodes(games, 5)
 
     def _stats_for(subset: pd.DataFrame) -> dict:
@@ -780,22 +961,29 @@ def top_players_profile(
             "min": subset["min_float"].sum() / gp,
         }
 
-    by_min = (
-        box.groupby("Player")["min_float"]
-        .sum()
-        .sort_values(ascending=False)
-        .head(top_n)
-        .index.tolist()
+    box["Name"] = (
+        box["Player"]
+        .str.split(", ")
+        .apply(lambda x: f"{x[1]} {x[0]}")
+        .str.title()
     )
+    player_stats = []
+    for player in player_names:
+        season_rows = box[box["Name"] == player]
+        if not season_rows.empty:
+            name_original = season_rows.Player.unique()[0]
+            last5_rows = season_rows[season_rows["Gamecode"].isin(gc_last5)]
 
+            s = _stats_for(season_rows)
+            l5 = _stats_for(last5_rows) if not last5_rows.empty else s
+
+            player_stats.append((name_original, player, s, l5))
+    player_stats = sorted(player_stats, key=lambda x: x[2][criterion], reverse=True)
+    player_stats = player_stats[:top_n]
     profiles = []
-    for player in by_min:
-        season_rows = box[box["Player"] == player]
-        last5_rows = season_rows[season_rows["Gamecode"].isin(gc_last5)]
-        s = _stats_for(season_rows)
-        l5 = _stats_for(last5_rows) if not last5_rows.empty else s
+    for name_original, player, s, l5 in player_stats:
+        dorsal = dorsal_map.get(player, "—")
 
-        dorsal = str(int(season_rows["Dorsal"].iloc[0])) if not season_rows.empty else "—"
         stats_df = pd.DataFrame(
             [
                 ("Points", f"{s['pts']:.1f}", f"{l5['pts']:.1f}"),
@@ -807,7 +995,12 @@ def top_players_profile(
             ],
             columns=["Stat", "Season Avg", "Last 5 Avg"],
         )
-        profiles.append({"name": player, "dorsal": dorsal, "stats_df": stats_df})
+
+        profiles.append({
+            "name": name_original,
+            "dorsal": dorsal,
+            "stats_df": stats_df
+        })
     return profiles
 
 
@@ -840,41 +1033,102 @@ def zone_distribution_table(shots: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def key_3p_shooters(
-    shots: pd.DataFrame, box: pd.DataFrame, top_n: int = 3
-) -> pd.DataFrame:
-    """Return the top *top_n* three-point shooters by attempts per game.
+def zone_summary(shots: pd.DataFrame) -> str:
+    """Build the zone-summary admonition string for the offensive-analysis page.
+
+    Groups the nine shot zones into three scouting-relevant bands and
+    returns a single ``!!! info`` admonition that reports each band's share
+    of total field-goal attempts and its field-goal percentage.
+
+    Zone groupings::
+
+        Paint & Layup  — A (restricted area), B (left short), C (right short)
+        Mid-Range      — D (left mid), E (centre mid), F (right mid)
+        3-Point        — G (left corner/wing), H (centre 3PT), I (right corner/wing)
 
     Args:
-        shots: Shot DataFrame with ``ZONE`` remapped, ``made`` column, and
-            ``Gamecode`` column.
-        box: Boxscore DataFrame used to determine games played per player.
-        top_n: Number of shooters to return.
+        shots: Shot DataFrame with ``ZONE`` (remapped via
+            :func:`~zone_mapping.remap_zones`) and ``POINTS`` columns.
 
     Returns:
-        DataFrame with columns ``Player``, ``3PA/G``, ``3P%``,
+        Fully-formatted ``!!! info "Zone Summary"`` admonition string ready
+        to be injected by :func:`~utils_markdown.update_info_in_file`.
+    """
+    fg = shots[shots["ZONE"].str.strip() != ""]
+    total = len(fg)
+
+    bands: dict[str, list[str]] = {
+        "Paint & Layup": ["A", "B", "C"],
+        "Mid-Range":     ["D", "E", "F"],
+        "3-Point":       ["G", "H", "I"],
+    }
+
+    parts: list[str] = []
+    for label, zones in bands.items():
+        group = fg[fg["ZONE"].isin(zones)]
+        att = len(group)
+        makes = int((group["POINTS"] > 0).sum())
+        share = att / total * 100 if total > 0 else 0.0
+        fg_pct = makes / att * 100 if att > 0 else 0.0
+        parts.append(
+            f"{label}: **{share:.1f}%** of FGA ({makes}/{att}, FG% **{fg_pct:.1f}%**)"
+        )
+
+    body = " — ".join(parts)
+    return f'!!! info "Zone Summary"\n    {body}'
+
+
+def _key_zone_shooters(
+    shots: pd.DataFrame,
+    box: pd.DataFrame,
+    zones: list[str],
+    col_attempts: str,
+    col_pct: str,
+    top_n: int,
+    team: str,
+) -> pd.DataFrame:
+    """Return top shooters by attempts-per-game for a given set of zones.
+
+    Only players in the active roster CSV (written by
+    :func:`save_active_roster`) are included, ensuring players who left
+    mid-season never appear.
+
+    Args:
+        shots: Shot DataFrame with remapped ``ZONE`` and ``POINTS`` columns.
+        box: Boxscore DataFrame used for games-played counts.
+        zones: EuroLeague zone codes to include (e.g. ``["G","H","I"]``).
+        col_attempts: Column name for attempts-per-game in the output table.
+        col_pct: Column name for FG% in the output table.
+        top_n: Number of rows to return.
+        team: Three-letter team code — passed to :func:`load_active_roster`.
+
+    Returns:
+        DataFrame with columns ``Player``, *col_attempts*, *col_pct*,
         ``Primary Zone``.
     """
-    threes = shots[shots["ZONE"].isin({"G", "H", "I"})].copy()
+    roster: set[str] = set(load_active_roster(team))
+    zone_set = set(zones)
+
+    filtered = shots[
+        shots["ZONE"].isin(zone_set) & shots["PLAYER"].isin(roster)
+    ].copy()
+
     gp_map = box.groupby("Player")["Gamecode"].nunique()
 
     agg = (
-        threes.groupby("PLAYER")
-        .agg(
-            attempts=("made", "count"),
-            makes=("made", "sum"),
-        )
+        filtered.groupby("PLAYER")
+        .agg(attempts=("POINTS", "count"), makes=("POINTS", lambda x: (x > 0).sum()))
         .reset_index()
     )
     agg["GP"] = agg["PLAYER"].map(gp_map).fillna(1)
-    agg["3PA/G"] = (agg["attempts"] / agg["GP"]).round(1)
-    agg["3P%"] = (agg["makes"] / agg["attempts"] * 100).map("{:.1f}%".format)
+    agg[col_attempts] = (agg["attempts"] / agg["GP"]).round(1)
+    agg[col_pct] = (agg["makes"] / agg["attempts"] * 100).map("{:.1f}%".format)
 
     primary_zone = (
-        threes.groupby(["PLAYER", "ZONE"])["made"]
+        filtered.groupby(["PLAYER", "ZONE"])["POINTS"]
         .count()
         .reset_index()
-        .sort_values("made", ascending=False)
+        .sort_values("POINTS", ascending=False)
         .drop_duplicates("PLAYER")
         .set_index("PLAYER")["ZONE"]
         .map(ZONE_LABELS)
@@ -882,11 +1136,75 @@ def key_3p_shooters(
     agg["Primary Zone"] = agg["PLAYER"].map(primary_zone)
 
     return (
-        agg.sort_values("3PA/G", ascending=False)
+        agg.sort_values(col_attempts, ascending=False)
         .head(top_n)
         .rename(columns={"PLAYER": "Player"})
-        [["Player", "3PA/G", "3P%", "Primary Zone"]]
+        [["Player", col_attempts, col_pct, "Primary Zone"]]
         .reset_index(drop=True)
+    )
+
+
+def key_3p_shooters(
+    shots: pd.DataFrame, box: pd.DataFrame, team: str, top_n: int = 3
+) -> pd.DataFrame:
+    """Return the top *top_n* three-point shooters by attempts per game.
+
+    Only players in the active roster CSV are included.
+
+    Args:
+        shots: Shot DataFrame with remapped ``ZONE`` and ``POINTS`` columns.
+        box: Boxscore DataFrame used for GP count.
+        team: Three-letter team code used to load the active roster.
+        top_n: Number of shooters to return.
+
+    Returns:
+        DataFrame with columns ``Player``, ``3PA/G``, ``3P%``,
+        ``Primary Zone``.
+    """
+    return _key_zone_shooters(shots, box, ["G", "H", "I"], "3PA/G", "3P%", top_n, team)
+
+
+def key_midrange_shooters(
+    shots: pd.DataFrame, box: pd.DataFrame, team: str, top_n: int = 3
+) -> pd.DataFrame:
+    """Return the top *top_n* mid-range shooters by attempts per game.
+
+    Only players in the active roster CSV are included.
+
+    Args:
+        shots: Shot DataFrame with remapped ``ZONE`` and ``POINTS`` columns.
+        box: Boxscore DataFrame used for GP count.
+        team: Three-letter team code used to load the active roster.
+        top_n: Number of shooters to return.
+
+    Returns:
+        DataFrame with columns ``Player``, ``MidR PA/G``, ``MidR FG%``,
+        ``Primary Zone``.
+    """
+    return _key_zone_shooters(
+        shots, box, ["D", "E", "F"], "MidR PA/G", "MidR FG%", top_n, team
+    )
+
+
+def key_paint_shooters(
+    shots: pd.DataFrame, box: pd.DataFrame, team: str, top_n: int = 3
+) -> pd.DataFrame:
+    """Return the top *top_n* paint shooters by attempts per game.
+
+    Only players in the active roster CSV are included.
+
+    Args:
+        shots: Shot DataFrame with remapped ``ZONE`` and ``POINTS`` columns.
+        box: Boxscore DataFrame used for GP count.
+        team: Three-letter team code used to load the active roster.
+        top_n: Number of shooters to return.
+
+    Returns:
+        DataFrame with columns ``Player``, ``Paint PA/G``, ``Paint FG%``,
+        ``Primary Zone``.
+    """
+    return _key_zone_shooters(
+        shots, box, ["A", "B", "C"], "Paint PA/G", "Paint FG%", top_n, team
     )
 
 

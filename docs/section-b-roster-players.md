@@ -1,7 +1,7 @@
 # <span class="section-badge">B</span> Roster & Player Profiles
 
 ## Full Roster
-
+<!-- START_TABLE ROSTER -->
 | #  | Name | Pos | Nationality | Height | Weight | Age |
 |----|---|---|---|---|---|---|
 | 00 | Armando Bacot | C/F | USA | 6'10" | 240 lbs | 25 |
@@ -21,76 +21,20 @@
 | 32 | Arturs Zagars | PG | Latvia | 6'3" | 185 lbs | 22 |
 | 50 | Bonzie Colson | PF | USA | 6'6" | 225 lbs | 28 |
 | 92 | Khem Birch | C | Canada | 6'9" | 233 lbs | 32 |
-
+<!-- START_TABLE ROSTER -->
 ---
 
 ## Key Player Profiles
 
 <!-- START_TABLE PLAYER-1-HEADER -->
-### BALDWIN IV, WADE — #2
+### HORTON TUCKER, TALEN — #8
 <!-- END_TABLE PLAYER-1-HEADER -->
 
 <!-- START_TABLE PLAYER-1-IMAGE -->
-![BALDWIN IV, WADE headshot](images/images/ULK_player_1.png)
+![HORTON TUCKER, TALEN headshot](images/ULK_player_1.png)
 <!-- END_TABLE PLAYER-1-IMAGE -->
 
 <!-- START_TABLE PLAYER-1-STATS -->
-| Stat     | Season Avg   | Last 5 Avg   |
-|:---------|:-------------|:-------------|
-| Points   | 14.4         | 13.6         |
-| Rebounds | 3.2          | 2.2          |
-| Assists  | 5.5          | 5.4          |
-| FG%      | 45.8%        | 40.7%        |
-| 3P%      | 27.7%        | 23.1%        |
-| Minutes  | 26.0         | 27.3         |
-<!-- END_TABLE PLAYER-1-STATS -->
-
-!!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
-
-<!-- START_TABLE PLAYER-1-HEATMAP -->
-![BALDWIN IV, WADE zone heatmap](images/ULK_heatmap_player_1.png)
-<!-- END_TABLE PLAYER-1-HEATMAP -->
-
----
-
-<!-- START_TABLE PLAYER-2-HEADER -->
-### BIBEROVIC, TARIK — #13
-<!-- END_TABLE PLAYER-2-HEADER -->
-
-<!-- START_TABLE PLAYER-2-IMAGE -->
-![BIBEROVIC, TARIK headshot](images/images/ULK_player_2.png)
-<!-- END_TABLE PLAYER-2-IMAGE -->
-
-<!-- START_TABLE PLAYER-2-STATS -->
-| Stat     | Season Avg   | Last 5 Avg   |
-|:---------|:-------------|:-------------|
-| Points   | 10.5         | 11.0         |
-| Rebounds | 3.1          | 2.7          |
-| Assists  | 1.3          | 1.3          |
-| FG%      | 44.1%        | 50.0%        |
-| 3P%      | 39.2%        | 60.0%        |
-| Minutes  | 23.8         | 23.0         |
-<!-- END_TABLE PLAYER-2-STATS -->
-
-!!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
-
-<!-- START_TABLE PLAYER-2-HEATMAP -->
-![BIBEROVIC, TARIK zone heatmap](images/ULK_heatmap_player_2.png)
-<!-- END_TABLE PLAYER-2-HEATMAP -->
-
----
-
-<!-- START_TABLE PLAYER-3-HEADER -->
-### HORTON TUCKER, TALEN — #8
-<!-- END_TABLE PLAYER-3-HEADER -->
-
-<!-- START_TABLE PLAYER-3-IMAGE -->
-![HORTON TUCKER, TALEN headshot](images/images/ULK_player_3.png)
-<!-- END_TABLE PLAYER-3-IMAGE -->
-
-<!-- START_TABLE PLAYER-3-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
 |:---------|:-------------|:-------------|
 | Points   | 15.7         | 12.4         |
@@ -99,26 +43,110 @@
 | FG%      | 48.5%        | 37.3%        |
 | 3P%      | 29.0%        | 15.4%        |
 | Minutes  | 23.7         | 25.3         |
+<!-- END_TABLE PLAYER-1-STATS -->
+
+!!! tip "Scouting Notes"
+    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+
+<!-- START_TABLE PLAYER-1-HEATMAP -->
+![HORTON TUCKER, TALEN zone heatmap](images/ULK_heatmap_player_1.png)
+<!-- END_TABLE PLAYER-1-HEATMAP -->
+
+---
+
+<!-- START_TABLE PLAYER-2-HEADER -->
+### BALDWIN IV, WADE — #2
+<!-- END_TABLE PLAYER-2-HEADER -->
+
+<!-- START_TABLE PLAYER-2-IMAGE -->
+![BALDWIN IV, WADE headshot](images/ULK_player_2.png)
+<!-- END_TABLE PLAYER-2-IMAGE -->
+
+<!-- START_TABLE PLAYER-2-STATS -->
+| Stat     | Season Avg   | Last 5 Avg   |
+|:---------|:-------------|:-------------|
+| Points   | 14.4         | 13.6         |
+| Rebounds | 3.2          | 2.2          |
+| Assists  | 5.5          | 5.4          |
+| FG%      | 45.8%        | 40.7%        |
+| 3P%      | 27.7%        | 23.1%        |
+| Minutes  | 26.0         | 27.3         |
+<!-- END_TABLE PLAYER-2-STATS -->
+
+!!! tip "Scouting Notes"
+    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+
+<!-- START_TABLE PLAYER-2-HEATMAP -->
+![BALDWIN IV, WADE zone heatmap](images/ULK_heatmap_player_2.png)
+<!-- END_TABLE PLAYER-2-HEATMAP -->
+
+---
+
+<!-- START_TABLE PLAYER-3-HEADER -->
+### DE COLO, NANDO — #12
+<!-- END_TABLE PLAYER-3-HEADER -->
+
+<!-- START_TABLE PLAYER-3-IMAGE -->
+![DE COLO, NANDO headshot](images/ULK_player_3.png)
+<!-- END_TABLE PLAYER-3-IMAGE -->
+
+<!-- START_TABLE PLAYER-3-STATS -->
+| Stat     | Season Avg   | Last 5 Avg   |
+|:---------|:-------------|:-------------|
+| Points   | 10.9         | 18.5         |
+| Rebounds | 1.5          | 1.0          |
+| Assists  | 2.3          | 1.0          |
+| FG%      | 56.8%        | 61.1%        |
+| 3P%      | 48.4%        | 55.6%        |
+| Minutes  | 18.5         | 20.8         |
 <!-- END_TABLE PLAYER-3-STATS -->
 
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
 <!-- START_TABLE PLAYER-3-HEATMAP -->
-![HORTON TUCKER, TALEN zone heatmap](images/ULK_heatmap_player_3.png)
+![DE COLO, NANDO zone heatmap](images/ULK_heatmap_player_3.png)
 <!-- END_TABLE PLAYER-3-HEATMAP -->
 
 ---
 
 <!-- START_TABLE PLAYER-4-HEADER -->
-### HALL, DEVON — #20
+### BIBEROVIC, TARIK — #13
 <!-- END_TABLE PLAYER-4-HEADER -->
 
 <!-- START_TABLE PLAYER-4-IMAGE -->
-![HALL, DEVON headshot](images/images/ULK_player_4.png)
+![BIBEROVIC, TARIK headshot](images/ULK_player_4.png)
 <!-- END_TABLE PLAYER-4-IMAGE -->
 
 <!-- START_TABLE PLAYER-4-STATS -->
+| Stat     | Season Avg   | Last 5 Avg   |
+|:---------|:-------------|:-------------|
+| Points   | 10.5         | 11.0         |
+| Rebounds | 3.1          | 2.7          |
+| Assists  | 1.3          | 1.3          |
+| FG%      | 44.1%        | 50.0%        |
+| 3P%      | 39.2%        | 60.0%        |
+| Minutes  | 23.8         | 23.0         |
+<!-- END_TABLE PLAYER-4-STATS -->
+
+!!! tip "Scouting Notes"
+    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+
+<!-- START_TABLE PLAYER-4-HEATMAP -->
+![BIBEROVIC, TARIK zone heatmap](images/ULK_heatmap_player_4.png)
+<!-- END_TABLE PLAYER-4-HEATMAP -->
+
+---
+
+<!-- START_TABLE PLAYER-5-HEADER -->
+### HALL, DEVON — #20
+<!-- END_TABLE PLAYER-5-HEADER -->
+
+<!-- START_TABLE PLAYER-5-IMAGE -->
+![HALL, DEVON headshot](images/ULK_player_5.png)
+<!-- END_TABLE PLAYER-5-IMAGE -->
+
+<!-- START_TABLE PLAYER-5-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
 |:---------|:-------------|:-------------|
 | Points   | 8.6          | 6.2          |
@@ -127,39 +155,11 @@
 | FG%      | 41.2%        | 37.9%        |
 | 3P%      | 25.8%        | 21.4%        |
 | Minutes  | 24.9         | 22.7         |
-<!-- END_TABLE PLAYER-4-STATS -->
-
-!!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
-
-<!-- START_TABLE PLAYER-4-HEATMAP -->
-![HALL, DEVON zone heatmap](images/ULK_heatmap_player_4.png)
-<!-- END_TABLE PLAYER-4-HEATMAP -->
-
----
-
-<!-- START_TABLE PLAYER-5-HEADER -->
-### MELLI, NICOLO — #4
-<!-- END_TABLE PLAYER-5-HEADER -->
-
-<!-- START_TABLE PLAYER-5-IMAGE -->
-![MELLI, NICOLO headshot](images/images/ULK_player_5.png)
-<!-- END_TABLE PLAYER-5-IMAGE -->
-
-<!-- START_TABLE PLAYER-5-STATS -->
-| Stat     | Season Avg   | Last 5 Avg   |
-|:---------|:-------------|:-------------|
-| Points   | 6.6          | 8.5          |
-| Rebounds | 5.4          | 5.0          |
-| Assists  | 1.6          | 2.5          |
-| FG%      | 46.4%        | 50.0%        |
-| 3P%      | 41.7%        | 37.5%        |
-| Minutes  | 22.7         | 20.6         |
 <!-- END_TABLE PLAYER-5-STATS -->
 
 !!! tip "Scouting Notes"
     _Describe strengths, tendencies, preferred spots, and how to defend this player._
 
 <!-- START_TABLE PLAYER-5-HEATMAP -->
-![MELLI, NICOLO zone heatmap](images/ULK_heatmap_player_5.png)
+![HALL, DEVON zone heatmap](images/ULK_heatmap_player_5.png)
 <!-- END_TABLE PLAYER-5-HEATMAP -->

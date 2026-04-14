@@ -22,8 +22,10 @@ _Describe Fenerbahce's offensive philosophy, pace, spacing principles, and prima
 | Left mid-range    |         29 | 1.3%         | 31.0% |
 <!-- END_TABLE ZONE-DISTRIBUTION -->
 
+<!-- START_INFO ZONE-SUMMARY -->
 !!! info "Zone Summary"
-    Paint & Layup: **_00.0%_** — Mid-Range: **_00.0%_** — 3-Point: **_00.0%_**
+    Paint & Layup: **50.8%** of FGA (616/1094, FG% **56.3%**) — Mid-Range: **7.5%** of FGA (65/162, FG% **40.1%**) — 3-Point: **41.7%** of FGA (327/899, FG% **36.4%**)
+<!-- END_INFO ZONE-SUMMARY -->
 
 ![alt text](images/zone_heatmap_team.png)
 ![alt text](images/zone_heatmap_players.png)
@@ -31,16 +33,25 @@ _Describe Fenerbahce's offensive philosophy, pace, spacing principles, and prima
 
 ## Key Shooters
 
+### 3 points Shooters
 <!-- START_TABLE KEY-SHOOTERS -->
-| Player               |   3PA/G | 3P%   | Primary Zone   |
-|:---------------------|--------:|:------|:---------------|
-| BIBEROVIC, TARIK     |     5   | 38.8% | Centre 3PT     |
-| WILBEKIN, SCOTTIE    |     3.4 | 41.7% | Centre 3PT     |
-| HORTON TUCKER, TALEN |     3.4 | 30.2% | Centre 3PT     |
+| Player   | 3PA/G   | 3P%   | Primary Zone   |
+|----------|---------|-------|----------------|
 <!-- END_TABLE KEY-SHOOTERS -->
 
----
+### Mid range Shooters
+<!-- START_TABLE KEY-SHOOTERS-MIDRANGE -->
+| Player   | MidR PA/G   | MidR FG%   | Primary Zone   |
+|----------|-------------|------------|----------------|
+<!-- END_TABLE KEY-SHOOTERS-MIDRANGE -->
 
+### In the paint Shooters
+<!-- START_TABLE KEY-SHOOTERS-PAINT -->
+| Player   | Paint PA/G   | Paint FG%   | Primary Zone   |
+|----------|--------------|-------------|----------------|
+<!-- END_TABLE KEY-SHOOTERS-PAINT -->
+
+---
 ## Primary Offensive Entries
 
 ### Entry 1 — _Name / Label_
@@ -50,7 +61,7 @@ _Describe the play: ball movement, screens, options, and who typically finishes.
 !!! danger "Defensive Priority"
     _How to stop this entry — switching rules, help coverage, communication keys._
 
-![alt text](images/ULK_heatmap_player_1.png)
+
 
 ### Entry 2 — _Name / Label_
 
@@ -61,7 +72,7 @@ _Describe the play: ball movement, screens, options, and who typically finishes.
 
 
 ---
-![alt text](images/ULK_heatmap_player_2.png)
+
 ### Entry 3 — _Name / Label_
 
 _Describe the play: ball movement, screens, options, and who typically finishes._

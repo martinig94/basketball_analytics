@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from zone_mapping import ZONE_LABELS, remap_zones
-from utils_plot import BG, PANEL_BG, RED, GREEN, GOLD, draw_half_court
+from utils_plot import BG, PANEL_BG, RED, GREEN, draw_half_court
 
 # ── load data ─────────────────────────────────────────────────────────────────
 

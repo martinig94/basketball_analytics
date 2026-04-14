@@ -120,7 +120,7 @@ def get_player_image_url(
     if "player_image_url" not in roster.columns:
         return None
     mask = (roster["player_name"] == player_name) & (
-        roster["player_team_code"] == team_code
+        roster["player_team_code"].str.contains(team_code)
     )
     matches = roster.loc[mask, "player_image_url"].dropna()
     return str(matches.iloc[0]) if not matches.empty else None
@@ -129,7 +129,6 @@ def get_player_image_url(
 def download_player_image(url: str, dest_path: str) -> bool:
     """Download a player headshot from *url* and save it to *dest_path*.
 
-    Skips the download if *dest_path* already exists (cache-on-disk).
     Creates any missing parent directories automatically.
 
     Args:
@@ -137,11 +136,10 @@ def download_player_image(url: str, dest_path: str) -> bool:
         dest_path: Local file path to write the image to.
 
     Returns:
-        ``True`` if the image was downloaded or already present,
+        ``True`` if the image was downloaded.
         ``False`` if the download failed.
     """
-    if os.path.exists(dest_path):
-        return True
+
     os.makedirs(os.path.dirname(dest_path) or ".", exist_ok=True)
     try:
         urllib.request.urlretrieve(url, dest_path)
