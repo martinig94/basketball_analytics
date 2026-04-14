@@ -34,7 +34,7 @@ Key outputs:
 
 ## Clutch Time Analysis
 
-Performance in end-game situations (last 4 minutes, score ≤ 10 points).
+Performance in end-game situations (last 4 minutes, score < 10 points).
 
 Key outputs:  
 - Clutch Offensive and Defensive Rating  

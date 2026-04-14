@@ -1,6 +1,7 @@
 # <span class="section-badge">F</span> Special Situations / Clutch Time
 
 ## Clutch Time Performance (Last 4 Minutes)
+To compute the following statistics, only games with a score difference < 10 points with 4 minutes to play were considered.
 <!-- START_TABLE CLUTCH-STATS -->
 | Metric                | Value                              |
 |:----------------------|:-----------------------------------|
