@@ -20,7 +20,7 @@ To compute the following statistics, only games with a score difference < 10 poi
 ## Last-Minute Shooters
 ![alt text](images/eoq_image.png)
 ## Last-Minute Play Tendencies
-![alt text](images/eoq_image.png)
+
 ### With Lead (Last 2 Minutes)
 
 _Describe how Fenerbahçe protects a lead: ball security, clock management, foul avoidance, defensive assignments._
