@@ -35,23 +35,34 @@ _Describe Fenerbahce's offensive philosophy, pace, spacing principles, and prima
 
 ### 3 points Shooters
 <!-- START_TABLE KEY-SHOOTERS -->
-| Player   | 3PA/G   | 3P%   | Primary Zone   |
-|----------|---------|-------|----------------|
+| Player               |   3PA/G | 3P%   | Primary Zone   |
+|:---------------------|--------:|:------|:---------------|
+| BIBEROVIC, TARIK     |     5   | 38.8% | Centre 3PT     |
+| HORTON TUCKER, TALEN |     3.4 | 30.2% | Centre 3PT     |
+| HALL, DEVON          |     3.1 | 30.2% | Centre 3PT     |
 <!-- END_TABLE KEY-SHOOTERS -->
 
 ### Mid range Shooters
 <!-- START_TABLE KEY-SHOOTERS-MIDRANGE -->
-| Player   | MidR PA/G   | MidR FG%   | Primary Zone   |
-|----------|-------------|------------|----------------|
+| Player           |   MidR PA/G | MidR FG%   | Primary Zone     |
+|:-----------------|------------:|:-----------|:-----------------|
+| BALDWIN IV, WADE |         1.8 | 39.7%      | Centre mid-range |
+| BIBEROVIC, TARIK |         0.8 | 30.8%      | Centre mid-range |
+| DE COLO, NANDO   |         0.8 | 44.4%      | Left mid-range   |
 <!-- END_TABLE KEY-SHOOTERS-MIDRANGE -->
 
 ### In the paint Shooters
 <!-- START_TABLE KEY-SHOOTERS-PAINT -->
-| Player   | Paint PA/G   | Paint FG%   | Primary Zone   |
-|----------|--------------|-------------|----------------|
+| Player               |   Paint PA/G | Paint FG%   | Primary Zone      |
+|:---------------------|-------------:|:------------|:------------------|
+| HORTON TUCKER, TALEN |          7.4 | 60.3%       | Under basket      |
+| BALDWIN IV, WADE     |          5.9 | 56.3%       | Right short range |
+| HALL, DEVON          |          3.3 | 53.3%       | Left short range  |
 <!-- END_TABLE KEY-SHOOTERS-PAINT -->
 
 ---
+## Players Efficiency
+![alt text](images/player_PIR.png)
 ## Primary Offensive Entries
 
 ### Entry 1 — _Name / Label_

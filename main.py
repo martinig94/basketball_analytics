@@ -6,8 +6,9 @@ live data from the EuroLeague API and local CSV caches.
 
 from zone_mapping import remap_zones
 
-from constants import SEASON, TEAM
+from constants import SEASON, TEAM, DPI
 from utils_euroleague import (
+    active_roster_table,
     add_winner_team,
     defense_stats_section,
     fastbreak_stats,
@@ -20,6 +21,8 @@ from utils_euroleague import (
     load_gamecodes,
     load_or_fetch_boxscores,
     load_or_fetch_shots,
+    player_per_game,
+    player_shooting_eff,
     prepare_eoq_by_period,
     prepare_eoq_stats,
     season_record_splits,
@@ -31,7 +34,7 @@ from utils_euroleague import (
 )
 from utils_css import write_team_css
 from utils_markdown import update_content_in_file, update_info_in_file, update_table_in_file
-from utils_plot import BG, heatmap_shot_players, heatmap_shot_team, make_fig1_eoq
+from utils_plot import BG, heatmap_shot_players, heatmap_shot_team, make_fig1_eoq, make_fig2_offense, make_fig3_pir_ts
 from utils_roster import download_player_image, fetch_or_load_rosters, get_player_image_url
 
 # ── per-team CSS ──────────────────────────────────────────────────────────────
@@ -86,6 +89,12 @@ update_table_in_file(
 
 
 # ── section-b-roster-players.md ───────────────────────────────────────────────
+
+update_table_in_file(
+    "docs/section-b-roster-players.md",
+    active_roster_table(TEAM),
+    "ROSTER",
+)
 
 players_data = top_players_profile(box, games, TEAM, top_n=5)
 players_data_9 = top_players_profile(box, games, TEAM, top_n=9)
@@ -149,6 +158,15 @@ update_table_in_file(
     key_paint_shooters(shots, box, TEAM),
     "KEY-SHOOTERS-PAINT",
 )
+
+per_game = player_per_game(box, TEAM)
+eff = player_shooting_eff(box, TEAM)
+fig2 = make_fig2_offense(per_game, eff, team=TEAM, season=SEASON)
+fig2.savefig("docs/images/player_PIR.png", dpi=DPI, bbox_inches="tight", facecolor=BG)
+print("Saved -> player_PIR.png")
+fig3 = make_fig3_pir_ts(per_game, eff, team=TEAM, season=SEASON)
+fig3.savefig("docs/images/player_pir_ts.png", dpi=DPI, bbox_inches="tight", facecolor=BG)
+print("Saved -> player_pir_ts.png")
 # ── section-d-defensive-analysis.md ──────────────────────────────────────────
 
 update_table_in_file(
@@ -169,8 +187,9 @@ update_table_in_file(
 eoq_stats = prepare_eoq_stats(shots)
 eoq_by_period = prepare_eoq_by_period(shots)
 fig1 = make_fig1_eoq(eoq_stats, eoq_by_period, team_name=TEAM, season=SEASON)
-fig1.savefig("docs/images/eoq_image.png", dpi=150, bbox_inches="tight", facecolor=BG)
+fig1.savefig("docs/images/eoq_image.png", dpi=DPI, bbox_inches="tight", facecolor=BG)
 print("Saved -> eoq_image.png")
+
 
 # ── appendix-box-scores.md ───────────────────────────────────────────────────
 

@@ -6,6 +6,7 @@ arguments so the same helpers can be reused across analyses.
 """
 
 import os
+import unicodedata
 from pathlib import Path
 from typing import Optional
 
@@ -841,124 +842,296 @@ def defense_stats_section(
     return pd.DataFrame(rows, columns=["Stat", "Value", "Context"])
 
 
-def load_active_roster(team: str, data_dir: str = "data") -> list[str]:
-    """Return the ordered list of active-roster player names for *team*.
+def _normalize_name(name: str) -> str:
+    """Strip accents and lowercase for accent-insensitive name matching.
 
-    Reads the dedicated CSV.
-    This is the shared sub-function used by every function that must restrict results to the
-    current squad.
+    Args:
+        name: Player name in any format or case.
+
+    Returns:
+        Lowercase ASCII-only string suitable for comparison.
+    """
+    return (
+        unicodedata.normalize("NFD", name)
+        .encode("ascii", "ignore")
+        .decode("ascii")
+        .lower()
+        .strip()
+    )
+
+
+def _box_to_display(box_name: str) -> str:
+    """Convert boxscore format ``'SURNAME, FIRSTNAME'`` to ``'Firstname Surname'``.
+
+    Args:
+        box_name: Player name in ``'SURNAME, FIRSTNAME'`` format.
+
+    Returns:
+        Name in ``'Firstname Surname'`` title-case format.
+    """
+    parts = box_name.split(", ", 1)
+    return f"{parts[1]} {parts[0]}".title() if len(parts) == 2 else box_name.title()
+
+
+def _roster_mapping(
+    team: str, box_players: pd.Series, data_dir: str = "data"
+) -> dict[str, tuple[str, str]]:
+    """Map each box-format player name to its (display_name, dorsal) from the CSV.
+
+    Uses accent-insensitive matching so e.g. ``'BIBEROVIC, TARIK'`` maps to
+    ``'Tarik Biberović'`` in the CSV.  Players not found in the CSV are omitted.
+
+    Args:
+        team: Three-letter team code.
+        box_players: Series of ``'SURNAME, FIRSTNAME'`` names from the boxscore.
+        data_dir: Directory containing the active-roster CSV.
+
+    Returns:
+        Dict mapping box-format name → ``(csv_display_name, dorsal_string)``.
+
+    Raises:
+        FileNotFoundError: If the active-roster CSV does not exist.
+    """
+    path = Path(data_dir) / f"active_roster_{team}.csv"
+    if not path.exists():
+        raise FileNotFoundError(f"Active roster CSV not found at '{path}'.")
+    csv_df = pd.read_csv(path)
+    csv_lookup: dict[str, tuple[str, str]] = {
+        _normalize_name(row["Name"]): (row["Name"].strip(), str(row["#"]))
+        for _, row in csv_df.iterrows()
+    }
+    result: dict[str, tuple[str, str]] = {}
+    for box_name in box_players.unique():
+        norm = _normalize_name(_box_to_display(box_name))
+        if norm in csv_lookup:
+            result[box_name] = csv_lookup[norm]
+    return result
+
+
+def load_active_roster(team: str, data_dir: str = "data") -> pd.DataFrame:
+    """Return the full active-roster DataFrame for *team*.
+
+    This is the manually maintained source of truth.  Every function that
+    needs to restrict to current-squad players calls this (via
+    :func:`_roster_mapping`) rather than deriving the list from the boxscore.
 
     Args:
         team: Three-letter team code.
         data_dir: Directory containing the CSV.
 
     Returns:
-        Player names.
+        DataFrame with all CSV columns (``#``, ``Name``, ``Pos``, etc.)
+        in the order written in the file.
 
     Raises:
-        FileNotFoundError: If the CSV has not been created yet.
+        FileNotFoundError: If the CSV does not exist.
     """
     path = Path(data_dir) / f"active_roster_{team}.csv"
     if not path.exists():
-        raise FileNotFoundError(
-            f"Active roster CSV not found at '{path}'. "
-        )
-    return pd.read_csv(path)["Name"].tolist()
+        raise FileNotFoundError(f"Active roster CSV not found at '{path}'.")
+    return pd.read_csv(path)
+
+
+def active_roster_table(team: str, data_dir: str = "data") -> pd.DataFrame:
+    """Return the active-roster CSV as a display-ready DataFrame for section B.
+
+    Args:
+        team: Three-letter team code.
+        data_dir: Directory containing the CSV.
+
+    Returns:
+        DataFrame with columns ``#``, ``Name``, ``Pos``, ``Nationality``,
+        ``Height``, ``Weight``, ``Age``.
+    """
+    return load_active_roster(team, data_dir)
 
 
 def top_players_profile(
     box: pd.DataFrame,
     games: pd.DataFrame,
     team: str,
-    criterion: str = "pts",
+    criterion: str = "minutes",
     top_n: int | None = None,
 ) -> list[dict]:
     """Return season and last-5 stats for players in the active roster CSV.
 
-    The *selection* of players is driven by
-    ``data/active_roster_{team}.csv`` (created by :func:`save_active_roster`
-    and editable by hand).  Stats are computed fresh from *box* each run.
-    Pass *top_n* to cap the number of profiles returned (e.g. 5 for section-B,
-    9 for the heatmap grid); ``None`` returns every player in the CSV.
+    The active-roster CSV is the source of truth for which players are
+    profiled.  Players absent from the boxscore (injured, not yet arrived)
+    are silently skipped.  Results are sorted by *criterion* descending.
 
     Args:
         box: Boxscore DataFrame filtered to *team*.
         games: DataFrame returned by :func:`load_gamecodes`.
         team: Three-letter team code — used to locate the roster CSV.
-        criterion: Statistic to use for ranking.
-        top_n: Maximum number of players to return.
-            Defaults to ``None`` (all rows in the CSV).
+        criterion: Sort key — ``"minutes"`` (minutes per game) or
+            ``"points"`` (points per game).
+        top_n: Maximum number of profiles to return.  ``None`` returns all
+            active-roster players found in the boxscore.
 
     Returns:
-        List of dicts in CSV order, each with keys ``name`` (str),
-        ``dorsal`` (str), and ``stats_df`` (:class:`~pandas.DataFrame`
-        with columns ``Stat``, ``Season Avg``, ``Last 5 Avg``).
+        List of dicts sorted by *criterion* descending, each with keys
+        ``name`` (CSV display name), ``dorsal`` (str), and ``stats_df``
+        (:class:`~pandas.DataFrame` with columns ``Stat``, ``Season Avg``,
+        ``Last 5 Avg``).
 
+    Raises:
+        ValueError: If *criterion* is not ``"minutes"`` or ``"points"``.
     """
-    roster_df = pd.read_csv(Path("data") / f"active_roster_{team}.csv")
-    player_names: list[str] = roster_df["Name"].tolist()
-    dorsal_map: dict[str, str] = roster_df.set_index("Name")["#"].astype(str).to_dict()
+    if criterion not in {"minutes", "points"}:
+        raise ValueError(f"criterion must be 'minutes' or 'points', got '{criterion}'")
+
+    mapping = _roster_mapping(team, box["Player"])
     gc_last5 = _last_n_gamecodes(games, 5)
 
     def _stats_for(subset: pd.DataFrame) -> dict:
         fgm = subset["FieldGoalsMade2"].sum() + subset["FieldGoalsMade3"].sum()
         fga = subset["FieldGoalsAttempted2"].sum() + subset["FieldGoalsAttempted3"].sum()
-        ftm = subset["FreeThrowsMade"].sum()
-        fta = subset["FreeThrowsAttempted"].sum()
         fgm3 = subset["FieldGoalsMade3"].sum()
         fga3 = subset["FieldGoalsAttempted3"].sum()
+        ftm = subset["FreeThrowsMade"].sum()
+        fta = subset["FreeThrowsAttempted"].sum()
         gp = subset["Gamecode"].nunique()
         return {
-            "pts": subset["Points"].sum() / gp,
-            "reb": subset["TotalRebounds"].sum() / gp,
-            "ast": subset["Assistances"].sum() / gp,
-            "fg_pct": fgm / fga * 100 if fga > 0 else 0.0,
+            "points":  subset["Points"].sum() / gp,
+            "reb":     subset["TotalRebounds"].sum() / gp,
+            "ast":     subset["Assistances"].sum() / gp,
+            "fg_pct":  fgm / fga * 100 if fga > 0 else 0.0,
             "fg3_pct": fgm3 / fga3 * 100 if fga3 > 0 else 0.0,
-            "ft_pct": ftm / fta * 100 if fta > 0 else 0.0,
-            "min": subset["min_float"].sum() / gp,
+            "ft_pct":  ftm / fta * 100 if fta > 0 else 0.0,
+            "minutes": subset["min_float"].sum() / gp,
         }
 
-    box["Name"] = (
-        box["Player"]
-        .str.split(", ")
-        .apply(lambda x: f"{x[1]} {x[0]}")
-        .str.title()
-    )
-    player_stats = []
-    for player in player_names:
-        season_rows = box[box["Name"] == player]
-        if not season_rows.empty:
-            name_original = season_rows.Player.unique()[0]
-            last5_rows = season_rows[season_rows["Gamecode"].isin(gc_last5)]
+    rows = []
+    for box_name, (display_name, dorsal) in mapping.items():
+        season_rows = box[box["Player"] == box_name]
+        if season_rows.empty:
+            continue
+        last5_rows = season_rows[season_rows["Gamecode"].isin(gc_last5)]
+        s = _stats_for(season_rows)
+        l5 = _stats_for(last5_rows) if not last5_rows.empty else s
+        rows.append((box_name, display_name, dorsal, s, l5))
 
-            s = _stats_for(season_rows)
-            l5 = _stats_for(last5_rows) if not last5_rows.empty else s
+    rows.sort(key=lambda r: r[3][criterion], reverse=True)
+    if top_n is not None:
+        rows = rows[:top_n]
 
-            player_stats.append((name_original, player, s, l5))
-    player_stats = sorted(player_stats, key=lambda x: x[2][criterion], reverse=True)
-    player_stats = player_stats[:top_n]
     profiles = []
-    for name_original, player, s, l5 in player_stats:
-        dorsal = dorsal_map.get(player, "—")
-
+    for box_name, display_name, dorsal, s, l5 in rows:
         stats_df = pd.DataFrame(
             [
-                ("Points", f"{s['pts']:.1f}", f"{l5['pts']:.1f}"),
-                ("Rebounds", f"{s['reb']:.1f}", f"{l5['reb']:.1f}"),
-                ("Assists", f"{s['ast']:.1f}", f"{l5['ast']:.1f}"),
-                ("FG%", f"{s['fg_pct']:.1f}%", f"{l5['fg_pct']:.1f}%"),
-                ("3P%", f"{s['fg3_pct']:.1f}%", f"{l5['fg3_pct']:.1f}%"),
-                ("Minutes", f"{s['min']:.1f}", f"{l5['min']:.1f}"),
+                ("Points",   f"{s['points']:.1f}",   f"{l5['points']:.1f}"),
+                ("Rebounds", f"{s['reb']:.1f}",      f"{l5['reb']:.1f}"),
+                ("Assists",  f"{s['ast']:.1f}",      f"{l5['ast']:.1f}"),
+                ("FG%",      f"{s['fg_pct']:.1f}%",  f"{l5['fg_pct']:.1f}%"),
+                ("3P%",      f"{s['fg3_pct']:.1f}%", f"{l5['fg3_pct']:.1f}%"),
+                ("Minutes",  f"{s['minutes']:.1f}",  f"{l5['minutes']:.1f}"),
             ],
             columns=["Stat", "Season Avg", "Last 5 Avg"],
         )
-
         profiles.append({
-            "name": name_original,
+            "name": display_name,
+            "box_name": box_name,
             "dorsal": dorsal,
-            "stats_df": stats_df
+            "stats_df": stats_df,
         })
     return profiles
+
+
+def player_per_game(box: pd.DataFrame, team: str) -> pd.DataFrame:
+    """Return per-game offensive stats for every active-roster player.
+
+    Uses ``data/active_roster_{team}.csv`` as the roster filter.  Only
+    rows where a player logged more than 3 minutes are included in averages
+    (avoids distorting statistics from garbage-time appearances).
+
+    Args:
+        box: Boxscore DataFrame filtered to *team*.
+        team: Three-letter team code.
+
+    Returns:
+        DataFrame with columns ``Player`` (display name), ``GP``, ``PPG``,
+        ``APG``, ``RPG``, ``PIR``, ``TO_per36``.
+    """
+    mapping = _roster_mapping(team, box["Player"])
+    qualified = box[
+        box["Player"].isin(mapping) & (box["min_float"] > 3)
+    ]
+    per_game = (
+        qualified.groupby("Player")
+        .agg(
+            GP=("Gamecode", "nunique"),
+            PPG=("Points", "mean"),
+            APG=("Assistances", "mean"),
+            RPG=("TotalRebounds", "mean"),
+            PIR=("Valuation", "mean"),
+            total_to=("Turnovers", "sum"),
+            total_min=("min_float", "sum"),
+        )
+        .reset_index()
+    )
+    per_game["TO_per36"] = per_game["total_to"] / per_game["total_min"] * 36
+    per_game["MPG"] = per_game["total_min"] / per_game["GP"]
+    per_game["Player"] = per_game["Player"].map(lambda p: mapping[p][0])
+    return per_game.drop(columns=["total_to", "total_min"])
+
+
+def player_shooting_eff(box: pd.DataFrame, team: str) -> pd.DataFrame:
+    """Return shooting efficiency stats for every active-roster player.
+
+    Computes eFG%, FT%, and True Shooting Percentage (TS%).
+
+    TS% formula::
+
+        TS% = PTS / (2 * (FGA + 0.44 * FTA)) * 100
+
+    The 0.44 factor accounts for the fact that free-throw trips are worth
+    fewer possessions than field-goal attempts (and-ones, technical fouls,
+    three-shot fouls each use different numbers of FTA per possession).
+
+    Uses ``data/active_roster_{team}.csv`` as the roster filter.
+
+    Args:
+        box: Boxscore DataFrame filtered to *team*.
+        team: Three-letter team code.
+
+    Returns:
+        DataFrame with columns ``Player`` (display name), ``eFG%``, ``FT%``,
+        ``TS%``, sorted by ``TS%`` descending.
+    """
+    mapping = _roster_mapping(team, box["Player"])
+    qualified = box[
+        box["Player"].isin(mapping) & (box["min_float"] > 3)
+    ]
+    eff = (
+        qualified.groupby("Player")
+        .agg(
+            PTS=("Points",               "sum"),
+            FGM2=("FieldGoalsMade2",      "sum"),
+            FGA2=("FieldGoalsAttempted2", "sum"),
+            FGM3=("FieldGoalsMade3",      "sum"),
+            FGA3=("FieldGoalsAttempted3", "sum"),
+            FTM=("FreeThrowsMade",        "sum"),
+            FTA=("FreeThrowsAttempted",   "sum"),
+        )
+        .reset_index()
+    )
+    eff["FGA"] = eff["FGA2"] + eff["FGA3"]
+    eff = eff[eff["FGA"] > 0].copy()
+    eff["eFG%"] = (eff["FGM2"] + eff["FGM3"] + 0.5 * eff["FGM3"]) / eff["FGA"] * 100
+    eff["FT%"] = eff.apply(
+        lambda r: r["FTM"] / r["FTA"] * 100 if r["FTA"] > 0 else 0.0, axis=1
+    )
+    eff["TS%"] = eff.apply(
+        lambda r: r["PTS"] / (2 * (r["FGA"] + 0.44 * r["FTA"])) * 100
+        if (r["FGA"] + r["FTA"]) > 0 else 0.0,
+        axis=1,
+    )
+    eff["Player"] = eff["Player"].map(lambda p: mapping[p][0])
+    return (
+        eff[["Player", "eFG%", "FT%", "TS%"]]
+        .sort_values("TS%", ascending=False)
+        .reset_index(drop=True)
+    )
 
 
 def zone_distribution_table(shots: pd.DataFrame) -> pd.DataFrame:
@@ -1063,11 +1236,11 @@ def _key_zone_shooters(
         DataFrame with columns ``Player``, *col_attempts*, *col_pct*,
         ``Primary Zone``.
     """
-    roster: set[str] = set(load_active_roster(team))
+    roster_box_names: set[str] = set(_roster_mapping(team, shots["PLAYER"]).keys())
     zone_set = set(zones)
 
     filtered = shots[
-        shots["ZONE"].isin(zone_set) & shots["PLAYER"].isin(roster)
+        shots["ZONE"].isin(zone_set) & shots["PLAYER"].isin(roster_box_names)
     ].copy()
 
     gp_map = box.groupby("Player")["Gamecode"].nunique()
@@ -1306,8 +1479,25 @@ def get_ranking(season: int, team:str):
 
 
 def _short_name(full_name: str) -> str:
-    """Return a display-friendly surname from a 'SURNAME, Firstname' string."""
-    surname = full_name.split(",")[0].strip()
-    # Preserve known all-caps tokens (roman numerals, generational suffixes)
+    """Return a display-friendly surname from either player name format.
+
+    Handles both ``'SURNAME, Firstname'`` (box format) and
+    ``'Firstname Surname'`` (display format).  Known all-caps tokens such as
+    roman numerals and generational suffixes are preserved.
+
+    Args:
+        full_name: Player name in any supported format.
+
+    Returns:
+        Title-cased surname string, e.g. ``'Biberovic'`` or ``'De Colo'``.
+    """
     _keep = {"II", "III", "IV", "JR", "SR"}
-    return " ".join(p if p in _keep else p.title() for p in surname.split())
+    if ", " in full_name:
+        surname = full_name.split(",")[0].strip()
+    else:
+        parts = full_name.strip().split()
+        # Skip the first token (first name); the rest is the surname
+        surname = " ".join(parts[1:]) if len(parts) > 1 else full_name
+    return " ".join(
+        p if p.upper() in _keep else p.title() for p in surname.split()
+    )

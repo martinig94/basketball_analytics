@@ -12,7 +12,7 @@
 | Primary clutch scorer | _Player Name_ |
 
 !!! info "Clutch Identity"
-    _Summarize how Fenerbahce behaves in late-game situations: do they go iso, run sets, push pace, or slow down?_
+    _Summarize how Fenerbahçe behaves in late-game situations: do they go iso, run sets, push pace, or slow down?_
 
 ---
 
@@ -20,7 +20,7 @@
 ![alt text](images/eoq_image.png)
 ### With Lead (Last 2 Minutes)
 
-_Describe how Fenerbahce protects a lead: ball security, clock management, foul avoidance, defensive assignments._
+_Describe how Fenerbahçe protects a lead: ball security, clock management, foul avoidance, defensive assignments._
 
 !!! danger "Attack Their Lead Protection"
     _When down late, describe how to attack their tendency (e.g., trap the ball-handler, foul specific players)._
@@ -29,7 +29,7 @@ _Describe how Fenerbahce protects a lead: ball security, clock management, foul 
 
 ### Tied or Trailing (Last 2 Minutes)
 
-_Describe how Fenerbahce attacks when tied or behind: primary play caller, go-to option, screening actions used._
+_Describe how Fenerbahçe attacks when tied or behind: primary play caller, go-to option, screening actions used._
 
 | Situation | Primary Option | Secondary Option | Key Screener |
 |---|---|---|---|
@@ -41,7 +41,7 @@ _Describe how Fenerbahce attacks when tied or behind: primary play caller, go-to
 
 ## Second Half Opening Plays
 
-_Describe typical plays Fenerbahce runs to open the second half or at the start of any quarter, based on observations from the last 5 games._
+_Describe typical plays Fenerbahçe runs to open the second half or at the start of any quarter, based on observations from the last 5 games._
 
 | Quarter | Play / Set | Primary Option |
 |---|---|---|

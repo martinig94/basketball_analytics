@@ -334,66 +334,134 @@ def plot_zone_heatmap(
 
 
 def plot_offensive_players(ax: Axes, per_game: pd.DataFrame) -> None:
-    """Stacked horizontal bar of PPG + APG for the top 10 players by PIR.
+    """Stacked horizontal bar of PPG + APG for all players, sorted by PIR.
 
     Args:
         ax: Matplotlib axes to draw on.
-        per_game: DataFrame with ``Player``, ``PPG``, ``APG``, and ``PIR``
-            columns.
+        per_game: DataFrame with ``Player`` (display name), ``PPG``, ``APG``,
+            and ``PIR`` columns.
     """
     ax.set_facecolor(PANEL_BG)
-    top = per_game.sort_values("PIR", ascending=False).head(10)
+    top = per_game.sort_values("PIR", ascending=False)
     y   = np.arange(len(top))
     ax.barh(y, top["PPG"], color=GOLD, label="PPG", alpha=0.9)
     ax.barh(y, top["APG"], left=top["PPG"], color=BLUE, label="APG", alpha=0.9)
     ax.set_yticks(y)
-    ax.set_yticklabels([p.split(",")[0] for p in top["Player"]], color="white", fontsize=9)
+    ax.set_yticklabels(
+        [_short_name(p) for p in top["Player"]], color="white", fontsize=9,
+    )
     for i, (ppg, apg, pir) in enumerate(zip(top["PPG"], top["APG"], top["PIR"])):
-        ax.text(ppg + apg + 0.3, i, f"PIR {pir:.1f}", va="center", color="#cccccc", fontsize=8)
-    ax.set_title("Key Offensive Players\n(sorted by PIR — PPG + APG)", **TITLE_KW)
+        ax.text(
+            ppg + apg + 0.3, i, f"PIR {pir:.1f}",
+            va="center", color="#cccccc", fontsize=8,
+        )
+    ax.set_title("Offensive Players — sorted by PIR\n(PPG + APG stacked)", **TITLE_KW)
     ax.legend(fontsize=9, facecolor=PANEL_BG, labelcolor="white", edgecolor="none")
     ax.tick_params(colors="white")
     ax.spines[:].set_visible(False)
 
 
 def plot_shooting_efficiency(ax: Axes, eff: pd.DataFrame) -> None:
-    """Grouped bar chart of eFG% vs FT% per player.
+    """Grouped bar chart of eFG%, FT%, and TS% per player.
+
+    TS% (True Shooting %) accounts for field goals, three-pointers, and free
+    throws and is the most comprehensive single-number scoring efficiency
+    metric.
 
     Args:
         ax: Matplotlib axes to draw on.
-        eff: DataFrame with ``Player``, ``eFG%``, and ``FT%`` columns.
+        eff: DataFrame with ``Player`` (display name), ``eFG%``, ``FT%``, and
+            ``TS%`` columns.
     """
     ax.set_facecolor(PANEL_BG)
     x = np.arange(len(eff))
-    ax.bar(x - 0.2, eff["eFG%"], width=0.38, color=GOLD, label="eFG%", alpha=0.9)
-    ax.bar(x + 0.2, eff["FT%"],  width=0.38, color=BLUE, label="FT%",  alpha=0.9)
+    w = 0.25
+    ax.bar(x - w, eff["eFG%"], width=w, color=GOLD,   label="eFG%", alpha=0.9)
+    ax.bar(x,     eff["FT%"],  width=w, color=BLUE,   label="FT%",  alpha=0.9)
+    ax.bar(x + w, eff["TS%"],  width=w, color=GREEN,  label="TS%",  alpha=0.9)
     ax.axhline(50, color="white", lw=0.8, ls="--", alpha=0.4)
     ax.set_xticks(x)
     ax.set_xticklabels(
-        [p.split(",")[0] for p in eff["Player"]],
+        [_short_name(p) for p in eff["Player"]],
         rotation=35, ha="right", color="white", fontsize=8,
     )
-    ax.set_title("Shooting Efficiency: eFG% vs FT%", **TITLE_KW)
+    ax.set_title("Shooting Efficiency: eFG% / FT% / TS%", **TITLE_KW)
     ax.set_ylabel("Percentage", color="white", fontsize=9)
     ax.legend(fontsize=9, facecolor=PANEL_BG, labelcolor="white", edgecolor="none")
     ax.tick_params(colors="white")
     ax.spines[:].set_visible(False)
 
 
+def plot_pir_vs_ts(
+    ax: Axes,
+    data: pd.DataFrame,
+    minutes: bool = True,
+) -> None:
+    """Scatter plot of PIR (x) vs TS% (y), one dot per player.
+
+    Args:
+        ax: Matplotlib axes to draw on.
+        data: DataFrame with ``Player`` (display name), ``PIR``, ``TS%``, and
+            ``MPG`` columns.
+        minutes: When ``True`` (default) the dot area is proportional to
+            minutes per game, making high-usage players visually prominent.
+            When ``False`` all dots have the same size.
+    """
+    ax.set_facecolor(PANEL_BG)
+
+    sizes = (data["MPG"] / data["MPG"].max() * 400 + 40) if minutes else 120
+
+    scatter = ax.scatter(
+        data["PIR"], data["TS%"],
+        s=sizes, c=GOLD, alpha=0.85, edgecolors="#333355", linewidths=0.6,
+        zorder=3,
+    )
+
+    for _, row in data.iterrows():
+        ax.annotate(
+            _short_name(row["Player"]),
+            xy=(row["PIR"], row["TS%"]),
+            xytext=(4, 4), textcoords="offset points",
+            color="white", fontsize=7.5, zorder=4,
+        )
+
+    # Reference lines at medians
+    ax.axvline(data["PIR"].median(), color="white", lw=0.7, ls="--", alpha=0.35)
+    ax.axhline(data["TS%"].median(), color="white", lw=0.7, ls="--", alpha=0.35)
+
+    ax.set_xlabel("PIR (Performance Index Rating)", color="white", fontsize=9)
+    ax.set_ylabel("TS% (True Shooting %)", color="white", fontsize=9)
+    size_note = "  —  dot size = MPG" if minutes else ""
+    ax.set_title(f"PIR vs True Shooting%{size_note}", **TITLE_KW)
+    ax.tick_params(colors="white")
+    ax.spines[:].set_visible(False)
+
+    if minutes:
+        # Legend proxy showing small / large dot meaning
+        for mpg, label in [(data["MPG"].min(), "low MPG"), (data["MPG"].max(), "high MPG")]:
+            s = mpg / data["MPG"].max() * 400 + 40
+            ax.scatter([], [], s=s, c=GOLD, alpha=0.85, label=label)
+        ax.legend(
+            fontsize=8, facecolor=PANEL_BG, labelcolor="white",
+            edgecolor="none", loc="lower right",
+        )
+
+
 def plot_turnovers(ax: Axes, per_game: pd.DataFrame) -> None:
-    """Horizontal bar of turnovers per 36 minutes for the top 10 players.
+    """Horizontal bar of turnovers per 36 minutes, sorted descending.
 
     Bars are coloured red (> 3.5), orange (> 2.5), or gold otherwise.
 
     Args:
         ax: Matplotlib axes to draw on.
-        per_game: DataFrame with ``Player``, ``TO_per36``, and ``GP`` columns.
+        per_game: DataFrame with ``Player`` (display name), ``TO_per36``,
+            and ``GP`` columns.
     """
     ax.set_facecolor(PANEL_BG)
-    to_df  = per_game.sort_values("TO_per36", ascending=False).head(10)
+    to_df  = per_game.sort_values("TO_per36", ascending=False)
     colors = [RED if v > 3.5 else ORANGE if v > 2.5 else GOLD for v in to_df["TO_per36"]]
     ax.barh(
-        to_df["Player"].apply(lambda p: p.split(",")[0]),
+        [_short_name(p) for p in to_df["Player"]],
         to_df["TO_per36"], color=colors, edgecolor="none",
     )
     for i, (v, gp) in enumerate(zip(to_df["TO_per36"], to_df["GP"])):
@@ -605,53 +673,124 @@ def heatmap_shot_team(shots, team):
     )
     plt.close(_fig)
 
-def heatmap_shot_players(shots, players_data, team:str="MIX"):
-    # Multi-player grid heatmap (colorbar omitted; use individual files for scale)
-    _n = len(players_data)
-    _cols = 3
-    _rows = math.ceil(_n / _cols)
-    _fig, _axes = plt.subplots(
-        _rows, _cols,
-        figsize=(_cols * 5.5, _rows * 6.5),
-        facecolor=BG,
-    )
-    _axes_flat = _axes.ravel() if _n > 1 else [_axes]
+def heatmap_shot_players(
+    shots: pd.DataFrame,
+    players_data: list[dict],
+    team: str = "MIX",
+) -> None:
+    """Save a grid heatmap and individual heatmaps for each player in *players_data*.
 
-    for _i, _player in enumerate(players_data):
-        _ax = _axes_flat[_i]
-        _ax.set_facecolor(PANEL_BG)
-        _player_shots = shots[shots["PLAYER"] == _player["name"]]
+    Uses ``box_name`` (boxscore format) from each player dict to correctly
+    filter the shots DataFrame, and ``name`` (CSV display name) for titles.
+
+    Args:
+        shots: Shot DataFrame with a ``PLAYER`` column in boxscore format.
+        players_data: List of player dicts as returned by
+            :func:`~utils_euroleague.top_players_profile`.  Each dict must
+            have ``name``, ``box_name``, and ``dorsal`` keys.
+        team: Three-letter team code used to name the individual files.
+    """
+    n    = len(players_data)
+    cols = 3
+    rows = math.ceil(n / cols)
+    fig, axes = plt.subplots(rows, cols, figsize=(cols * 5.5, rows * 6.5), facecolor=BG)
+    axes_flat = axes.ravel() if n > 1 else [axes]
+
+    for i, player in enumerate(players_data):
+        ax = axes_flat[i]
+        ax.set_facecolor(PANEL_BG)
+        player_shots = shots[shots["PLAYER"] == player["box_name"]]
         plot_zone_heatmap(
-            _ax,
-            _player_shots,
-            title=f"#{_player['dorsal']} {_short_name(_player['name'])}",
+            ax,
+            player_shots,
+            title=f"#{player['dorsal']} {_short_name(player['name'])}",
             colorbar=False,
         )
 
-    for _ax in _axes_flat[_n:]:
-        _ax.set_visible(False)
+    for ax in axes_flat[n:]:
+        ax.set_visible(False)
 
-    _fig.tight_layout(pad=1.5)
-    _fig.savefig(
+    fig.tight_layout(pad=1.5)
+    fig.savefig(
         "docs/images/zone_heatmap_players.png",
-        dpi=DPI, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+        dpi=DPI, bbox_inches="tight", facecolor=fig.get_facecolor(),
     )
-    plt.close(_fig)
+    plt.close(fig)
 
-    # Individual player heatmaps  —  {TEAM}_heatmap_player_{num}.png
-    # num=1 → top player by minutes, num=2 → second, etc.
-    for _num, _player in enumerate(players_data, start=1):
-        _fig, _ax = plt.subplots(figsize=(7, 9), facecolor=BG)
-        _ax.set_facecolor(PANEL_BG)
-        _player_shots = shots[shots["PLAYER"] == _player["name"]]
+    # Individual per-player files — {TEAM}_heatmap_player_{num}.png
+    for num, player in enumerate(players_data, start=1):
+        fig, ax = plt.subplots(figsize=(7, 9), facecolor=BG)
+        ax.set_facecolor(PANEL_BG)
+        player_shots = shots[shots["PLAYER"] == player["box_name"]]
         plot_zone_heatmap(
-            _ax,
-            _player_shots,
-            title=f"{_short_name(_player['name'])} — #{_player['dorsal']}",
+            ax,
+            player_shots,
+            title=f"{_short_name(player['name'])} — #{player['dorsal']}",
             colorbar=True,
         )
-        _fig.savefig(
-            f"docs/images/{team}_heatmap_player_{_num}.png",
-            dpi=DPI, bbox_inches="tight", facecolor=_fig.get_facecolor(),
+        fig.savefig(
+            f"docs/images/{team}_heatmap_player_{num}.png",
+            dpi=DPI, bbox_inches="tight", facecolor=fig.get_facecolor(),
         )
-        plt.close(_fig)
+        plt.close(fig)
+
+
+def make_fig2_offense(
+    per_game: pd.DataFrame,
+    eff: pd.DataFrame,
+    team: str,
+    season: int,
+) -> plt.Figure:
+    """Offensive player overview: PIR bar chart and shooting efficiency chart.
+
+    Args:
+        per_game: Output of :func:`~utils_euroleague.player_per_game`.
+        eff: Output of :func:`~utils_euroleague.player_shooting_eff`.
+        team: Three-letter team code used in the figure title.
+        season: Season start year (e.g. 2025 for the 2025-26 season).
+
+    Returns:
+        Matplotlib Figure ready for ``savefig``.
+    """
+    fig, (ax_off, ax_eff) = plt.subplots(1, 2, figsize=(16, 7))
+    fig.patch.set_facecolor(BG)
+    fig.suptitle(
+        f"{team} — EuroLeague {season}-{season + 1}  |  Player Offensive Overview",
+        color="white", fontsize=15, fontweight="bold", y=1.01,
+    )
+    plot_offensive_players(ax_off, per_game)
+    plot_shooting_efficiency(ax_eff, eff)
+    fig.tight_layout()
+    return fig
+
+
+def make_fig3_pir_ts(
+    per_game: pd.DataFrame,
+    eff: pd.DataFrame,
+    team: str,
+    season: int,
+    minutes: bool = True,
+) -> plt.Figure:
+    """PIR vs True Shooting% scatter plot, one dot per active-roster player.
+
+    Args:
+        per_game: Output of :func:`~utils_euroleague.player_per_game`.
+        eff: Output of :func:`~utils_euroleague.player_shooting_eff`.
+        team: Three-letter team code used in the figure title.
+        season: Season start year (e.g. 2025 for the 2025-26 season).
+        minutes: When ``True`` dot size scales with minutes per game.
+
+    Returns:
+        Matplotlib Figure ready for ``savefig``.
+    """
+    scatter_data = per_game.merge(eff[["Player", "TS%"]], on="Player", how="inner")
+
+    fig, ax = plt.subplots(figsize=(10, 7))
+    fig.patch.set_facecolor(BG)
+    fig.suptitle(
+        f"{team} — EuroLeague {season}-{season + 1}  |  PIR vs True Shooting%",
+        color="white", fontsize=15, fontweight="bold", y=1.01,
+    )
+    plot_pir_vs_ts(ax, scatter_data, minutes=minutes)
+    fig.tight_layout()
+    return fig
