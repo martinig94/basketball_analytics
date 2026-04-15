@@ -2,8 +2,8 @@
 
 ## Offensive Transition
 
-_Describe how Fenerbahce pushes in transition: primary runners, outlet passer, target spots, and decision-making tendencies._
-
+Fenerbahce operates at a controlled, medium pace and does not prioritize pushing in transition. Their offensive identity is half-court heavy, with Baldwin IV and Horton-Tucker as the primary ball-carriers when they do advance quickly.
+<!--
 ### Primary Transition Options
 
 | Option | Trigger | Key Players | Frequency |
@@ -11,10 +11,9 @@ _Describe how Fenerbahce pushes in transition: primary runners, outlet passer, t
 | Primary break | _Defensive rebound_ | _Player_ | _High / Medium / Low_ |
 | Secondary break | _Made basket / FT_ | _Player_ | _High / Medium / Low_ |
 | Push in transition | _Steal_ | _Player_ | _High / Medium / Low_ |
-
+-->
 !!! danger "Defensive Priority"
-    _How to stop their transition: who to stop the ball, sprint-back assignments, key players to contain._
-
+    Defensive Priority: Stop the ball early on Baldwin IV and on Horton-Tucker . De Colo and Melli are slow in transition — no urgency to contain them on the sprint back.
 ---
 
 ### Transition Statistics
@@ -29,17 +28,16 @@ _Describe how Fenerbahce pushes in transition: primary runners, outlet passer, t
 ---
 
 ## Defensive Transition
-<!--
-_Describe how Fenerbahce defends transition: gaps in getting back, who they tend to leave open, and how to exploit early offense opportunities._
+
+Fenerbahce emphasizes transition balance and stopping early offense. They are disciplined in getting back but show vulnerability — they allow 9.3 fast-break points per game.
 
 ### Transition Defense Vulnerabilities
 
 !!! success "Exploit — Early Offense"
-    _Describe the situation where early offense can be attacked (e.g., specific player slow in transition, weak-side is unguarded)._
+    De Colo and Melli are slow getting back. Attack the rim before the defense sets — target weak-side lanes when Birch is the rebounder pushing up.
 
 !!! success "Exploit — Secondary Break"
-    _Describe how to attack their secondary transition defense._
--->
+    They concede 2.6 transition fouls per game. Probe secondary actions before the defense organizes, particularly against Horton-Tucker who has inconsistent off-ball defensive reads.
 ---
 
 ### Transition Defense Statistics
