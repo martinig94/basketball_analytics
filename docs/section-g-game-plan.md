@@ -14,7 +14,9 @@
 
 ## Offensive Attack Strategy
 
-Target Fenerbahce's defensive weaknesses: their last-5-game defensive stats show significant drop-off — opponents are shooting 49.8% FG and 45.0% from three over the last 5 games (vs. season averages of 44.2% FG and 32.7% 3P%). Their transition defense also allows **9.3 fast-break points per game**. The primary targets on offense are **Nando De Colo** (limited lateral quickness), **Khem Birch** (struggles in space away from the rim), and **Talen Horton Tucker** (inconsistent defensive discipline). Push pace early — Fenerbahce prefers a controlled, medium tempo and is more vulnerable when forced to defend in transition.
+Target Fenerbahce's defensive weaknesses: their last-5-game defensive stats show significant drop-off — opponents are shooting 49.8% FG and 45.0% from three over the last 5 games (vs. season averages of 44.2% FG and 32.7% 3P%).   
+Their transition defense also allows **9.3 fast-break points per game**. The primary targets on offense are **Nando De Colo** (limited lateral quickness), **Khem Birch** (struggles in space away from the rim), and **Talen Horton Tucker** (inconsistent defensive discipline).   
+Push pace early — Fenerbahce prefers a controlled, medium tempo and is more vulnerable when forced to defend in transition.
 
 ### Priority Matchups to Attack
 
@@ -64,8 +66,10 @@ Fenerbahce allows 9.3 fast-break points per game and has gone 0-5 in their last 
 ## Summary
 
 Fenerbahce Beko Istanbul is a structured, defense-first team under Jasikevičius that has fallen sharply in recent form (0–5 in last 5 games, dropping from 3rd to 5th). While their season record (23-14, 62.2%) reflects genuine quality,
-their defense has badly deteriorated in the past month — opponents are scoring 88 points per game in this stretch and shooting 45% from three. The three things that must be executed to win:  
-**1)** contain Wade Baldwin IV in the PnR and force him left, disrupting his rhythm before he can build momentum;  
-**2)** relentlessly attack Nando De Colo and Khem Birch in favorable matchups — these are the two most exploitable defenders in their scheme;
+their defense has badly deteriorated in the past month — opponents are scoring 88 points per game in this stretch and shooting 45% from three.  
+
+The three things that must be executed to win:    
+**1)** contain Wade Baldwin IV in the PnR and force him left, disrupting his rhythm before he can build momentum;    
+**2)** relentlessly attack Nando De Colo and Khem Birch in favorable matchups — these are the two most exploitable defenders in their scheme;  
 **3)** push tempo every chance available, denying Fenerbahce the controlled, half-court game that is their comfort zone. This team is winnable against right now — their confidence is low and their defense has significant cracks.
 Execute the game plan, attack the matchups, and take care of the ball against their pressure.  
