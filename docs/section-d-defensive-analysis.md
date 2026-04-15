@@ -107,14 +107,12 @@
 ## Defensive Weaknesses
 
 !!! success "Exploit — Weakness 1"
-    _Describe the vulnerability (e.g., gives up corner threes, slow to rotate on skip passes)._
+    - Can be vulnerable to **early offense** before the defense is set  
+    - Opportunities in **transition and drag screens** before matchups are organized  
 
 !!! success "Exploit — Weakness 2"
-    _Describe the vulnerability._
-
-!!! success "Exploit — Weakness 3"
-    _Describe the vulnerability._
-
+    - Occasional **breakdowns vs multiple actions** (e.g., Spain PnR, stagger into PnR)  
+    - Forcing **repeated defensive decisions** can create late rotations or confusion  
 ---
 
 ## Attackable Matchups
