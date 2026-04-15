@@ -46,7 +46,16 @@
 <!-- END_TABLE PLAYER-1-STATS -->
 
 !!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+    * **Strengths**: Explosive first step, elite in isolation and PnR; creates own shot late clock
+    * **Tendencies**: Heavy right-hand driver; prefers going right out of high PnR; pull-up jumper after 1–2 dribbles
+    * **Preferred spots**: Top of the key, right wing; mid-range pull-up area
+    * **Physicality**: Very physical guard, absorbs contact well, finishes through bodies
+    * **Handedness**: Right-handed  
+    * **How to defend**:
+        * Shade him left, force weak hand
+        * Show bodies early in PnR, mix coverages
+        * Go under selectively (streaky shooter) but be ready to contest pull-up
+        * Keep him out of rhythm, he thrives on momentum
 
 <!-- START_TABLE PLAYER-1-HEATMAP -->
 ![Wade Baldwin Iv zone heatmap](images/ULK_heatmap_player_1.png)
@@ -74,7 +83,15 @@
 <!-- END_TABLE PLAYER-2-STATS -->
 
 !!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+    * **Strengths**: 3&D guard, efficient spot-up shooter, smart cutter
+    * **Tendencies**: Plays off others; catch-and-shoot threat, attacks closeouts straight-line
+    * **Preferred spots**: Corners, wings (especially right corner)
+    * **Physicality**: Solid, not overly physical but strong enough to defend multiple positions
+    * **Handedness**: Right-handed
+    * **How to defend**:
+        * No-help off him—high IQ shooter
+        * Close out under control (attacks long closeouts)
+        * Force him to create off the dribble 
 
 <!-- START_TABLE PLAYER-2-HEATMAP -->
 ![Devon Hall zone heatmap](images/ULK_heatmap_player_2.png)
@@ -102,7 +119,15 @@
 <!-- END_TABLE PLAYER-3-STATS -->
 
 !!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+    * **Strengths**: Shooting, floor spacing, off-ball movement  
+    * **Tendencies**: Catch-and-shoot, relocates well, quick trigger  
+    * **Preferred spots**: Corners and wings (left side slightly preferred)  
+    * **Physicality**: Not very physical; more finesse player   
+    * **Handedness**: Right-handed  
+    * **How to defend**:  
+        * Top-lock or chase him off screens  
+        * Force him to put the ball on the floor  
+        * Be physical with him to disrupt timing  
 
 <!-- START_TABLE PLAYER-3-HEATMAP -->
 ![Tarik Biberovic zone heatmap](images/ULK_heatmap_player_3.png)
@@ -130,7 +155,15 @@
 <!-- END_TABLE PLAYER-4-STATS -->
 
 !!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+    * **Strengths**: Strong driver, finishes with length; can create in isolation
+    * **Tendencies**: Left-hand dominant; drives left aggressively; uses body to shield defenders
+    * **Preferred spots**: Left wing/top; paint touches
+    * **Physicality**: Very physical, strong frame for a guard
+    * **Handedness**: Left-handed (important!)
+    * **How to defend**:
+        * Force right at all costs
+        * Gap him slightly, make him shoot from outside
+        * Show help early, he wants to get to the rim
 
 <!-- START_TABLE PLAYER-4-HEATMAP -->
 ![Talen Horton Tucker zone heatmap](images/ULK_heatmap_player_4.png)
@@ -158,7 +191,15 @@
 <!-- END_TABLE PLAYER-5-STATS -->
 
 !!! tip "Scouting Notes"
-    _Describe strengths, tendencies, preferred spots, and how to defend this player._
+    * **Strengths**: High IQ, passing, spacing (stretch big), defensive versatility  
+    * **Tendencies**: Facilitator from high post; pick-and-pop threat; quick decision-maker  
+    * **Preferred spots**: Top of the key, elbows, above-the-break 3  
+    * **Physicality**: Physical and smart defender, strong positioning  
+    * **Handedness**: Right-handed  
+    * **How to defend**:  
+        * Close out short but controlled  
+        * Deny easy passing angles, he’s a connector  
+        * Attack him in space with speed  
 
 <!-- START_TABLE PLAYER-5-HEATMAP -->
 ![Nicolo Melli zone heatmap](images/ULK_heatmap_player_5.png)

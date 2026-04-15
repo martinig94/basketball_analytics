@@ -1333,7 +1333,10 @@ def _key_zone_shooters(
 
     Returns:
         DataFrame with columns ``Player``, *col_attempts*, *col_pct*,
-        ``Primary Zone``.
+        ``Primary Zone``.  *col_pct* is the combined FG% across all zones
+        in the group.  ``Primary Zone`` identifies the zone with the highest
+        FG% and includes that percentage in parentheses, e.g.
+        ``"Centre 3PT (42.9%)``.
     """
     roster_box_names: set[str] = set(_roster_mapping(team, shots["PLAYER"]).keys())
     zone_set = set(zones)
@@ -1353,16 +1356,28 @@ def _key_zone_shooters(
     agg[col_attempts] = (agg["attempts"] / agg["GP"]).round(1)
     agg[col_pct] = (agg["makes"] / agg["attempts"] * 100).map("{:.1f}%".format)
 
-    primary_zone = (
-        filtered.groupby(["PLAYER", "ZONE"])["POINTS"]
-        .count()
+    zone_agg = (
+        filtered.groupby(["PLAYER", "ZONE"])
+        .agg(
+            z_attempts=("POINTS", "count"),
+            z_makes=("POINTS", lambda x: (x > 0).sum()),
+        )
         .reset_index()
-        .sort_values("POINTS", ascending=False)
-        .drop_duplicates("PLAYER")
-        .set_index("PLAYER")["ZONE"]
-        .map(ZONE_LABELS)
     )
-    agg["Primary Zone"] = agg["PLAYER"].map(primary_zone)
+    zone_agg["z_pct"] = zone_agg["z_makes"] / zone_agg["z_attempts"]
+
+    best_zone = (
+        zone_agg.sort_values("z_pct", ascending=False)
+        .drop_duplicates("PLAYER")
+        .set_index("PLAYER")
+    )
+
+    agg["Primary Zone"] = agg["PLAYER"].map(
+        best_zone["ZONE"].map(ZONE_LABELS)
+        + " ("
+        + (best_zone["z_pct"] * 100).map("{:.1f}%".format)
+        + ")"
+    )
 
     return (
         agg.sort_values(col_attempts, ascending=False)
@@ -1457,6 +1472,48 @@ def fastbreak_stats(shots: pd.DataFrame) -> pd.DataFrame:
     rows = [
         ("Fast Break Points Per Game", f"{fb_pts_per_game:.1f}"),
         ("Fast Break FGs Per Game", f"{fb_fgs_per_game:.1f}"),
+    ]
+    return pd.DataFrame(rows, columns=["Stat", "Value"])
+
+
+def fastbreak_stats_defense(
+    shots_raw: pd.DataFrame, box: pd.DataFrame, team: str
+) -> pd.DataFrame:
+    """Compute defensive transition statistics.
+
+    Opp. fast break points are taken directly from the shot log.
+    Transition fouls are approximated as opponent free-throw sequences
+    (grouped by Gamecode/player/minute) that occurred on fast-break or
+    points-off-turnover possessions — a proxy that captures fouls
+    surrendering FTs in transition but misses non-shooting fouls.
+
+    Args:
+        shots_raw: All-teams shot DataFrame (no team filter, no zone remap).
+        box: Team boxscore DataFrame already filtered to *team*.
+        team: Three-letter team code.
+
+    Returns:
+        DataFrame with columns ``Stat`` and ``Value``.
+    """
+    opp = shots_raw[shots_raw["TEAM"] != team]
+    n_games = shots_raw["Gamecode"].nunique()
+
+    fb_pts = (
+        opp[(opp["FASTBREAK"] == 1) & (opp["COORD_X"] != -1)]["POINTS"].sum()
+        / n_games
+    )
+
+    transition_fts = opp[
+        (opp["COORD_X"] == -1)
+        & ((opp["FASTBREAK"] == 1) | (opp["POINTS_OFF_TURNOVER"] == 1))
+    ]
+    fouls_pg = (
+        transition_fts.groupby(["Gamecode", "PLAYER", "MINUTE"]).ngroups / n_games
+    )
+
+    rows = [
+        ("Opp. Fast Break Points Allowed / G", f"{fb_pts:.1f}"),
+        ("Transition Fouls Per Game leading to FT", f"{fouls_pg:.1f}"),
     ]
     return pd.DataFrame(rows, columns=["Stat", "Value"])
 

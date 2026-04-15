@@ -37,14 +37,14 @@ SHORT_RANGE_MAX: int = 449   # max distance for zones B/C; min(max_d_orig_D, max
 
 ZONE_LABELS: dict[str, str] = {
     "A": "Under basket",
-    "B": "Left short range",
-    "C": "Right short range",
-    "D": "Left mid-range",
+    "B": "Right short range",
+    "C": "Left short range",
+    "D": "Right mid-range",
     "E": "Centre mid-range",
-    "F": "Right mid-range",
-    "G": "Left 3PT",
+    "F": "Left mid-range",
+    "G": "Right 3PT",
     "H": "Centre 3PT",
-    "I": "Right 3PT",
+    "I": "Left 3PT",
 }
 
 

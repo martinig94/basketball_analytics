@@ -2,23 +2,93 @@
 
 ## Base Defensive System
 
-_Describe Fenerbahce's primary defensive scheme: man-to-man, zone, switching principles, press usage, and overall defensive identity._
+**Defensive identity**
+
+- Defense-first team, high physicality and discipline
+- Strong half-court defense; wins through control and execution
+- Emphasis on positioning, communication, and limiting mistakes
+
+**Base scheme**
+
+- Primarily **man-to-man**
+- Very structured, low gambling, stay within system
+
+**Switching principles**
+
+- Selective switching (1–3 mostly)
+- Bigger lineups allow occasional 1–4 switching
+- Avoid unnecessary mismatches vs dominant bigs
+
+**Help & rotations**
+
+- Strong nail and low-man help
+- Good stunt-and-recover discipline
+- Prioritize protecting the paint first
+
+**Press / transition defense**
+
+- Limited full-court press usage, used when trailing at the end of the game (see Round 35 vs Munich)
+- Focus on **transition defense balance** and stopping early offense
 
 ---
-
 ## Pick & Roll Coverage
 
 | Coverage Type | Used Against | Notes |
 |---|---|---|
-| Drop | _Ball-handler type_ | _When / why they use it_ |
-| Hedge / Show | _Ball-handler type_ | _When / why they use it_ |
-| Switch | _Matchup type_ | _When / why they use it_ |
-| ICE / Steer | _Side / situation_ | _When / why they use it_ |
+| Drop | Non-elite pull-up threats / secondary handlers | Protect paint, rely on positioning; not primary vs top guards |
+| Hedge / Show | Elite scoring guards | Disrupt rhythm, force ball out, rotate behind |
+| Switch | Similar size / late clock | Avoid rotations; used with versatile lineups |
+| ICE / Steer | Side PnR | Keep ball out of middle, send to help |
 
 !!! info "P&R Notes"
-    _Describe the most common coverage and any tendencies or inconsistencies observed in the last 5 games._
+    - **Base vs top guards**: Hedge/Show rather than deep drop  
+    - **Drop is situational**, not default vs elite creators  
+    - Coverage changes based on personnel on the floor  
 
----
+### Coverage Tendencies per player
+**Nicolo Melli**
+
+- Drop → strong positioning, anchor  
+- Switch → very capable (1–5 in short stretches)  
+- Rarely aggressive hedge  
+
+**Khem Birch**
+
+- Drop → primary role (rim protection)  
+- Limited switching  
+- Occasionally contain (soft show, then recover)  
+
+**Wade Baldwin IV**
+
+- On-ball defender at POA  
+- Fights over screens → enables hedge
+- Can switch 1–3  
+
+**Devon Hall**
+
+- Connector defender  
+- Switch / chase over screens  
+- Strong in team defense rotations  
+
+**Talen Horton-Tucker**
+
+- More physical than disciplined  
+- Can switch due to size  
+- Less reliable in structured coverages  
+
+**Mikael Jantunen**
+
+- Switch → comfortable 3–5, mobile big  
+- Hedge/Show → capable, can move feet and recover  
+- Drop → less natural; not a pure rim protector  
+- Role: increases lineup mobility and switching versatility  
+
+**Nando De Colo**
+
+- Primarily off-ball defender  
+- Limited switching → can be targeted physically  
+- Navigates screens rather than disrupts  
+- Often **protected within the scheme** (help behind, less exposure at POA)  
 
 ## Defensive Statistics — Last 5 Games
 <!-- START_TABLE DEFENSE-STATS-5 -->
@@ -51,12 +121,13 @@ _Describe Fenerbahce's primary defensive scheme: man-to-man, zone, switching pri
 
 | Player | Weakness | Recommended Attack |
 |---|---|---|
-| _Player Name_ | _e.g., poor closeout_ | _Drive off the closeout_ |
-| _Player Name_ | _e.g., post defense_ | _Post up with size advantage_ |
-| _Player Name_ | _e.g., on-ball defense_ | _Isolate in half-court_ |
+| **Nando De Colo** | Limited lateral quickness| Isolate in PnR, force switches, attack downhill |
+| **Khem Birch** | Struggles defending in space / away from rim | Pick-and-pop, pull him out of paint, short roll reads |
+| **Talen Horton-Tucker** | Defensive discipline / reads can vary | Force into multiple actions, test off-ball awareness |
 
 ---
-
+<!--
 ## Transition Defense
 
 _Describe how Fenerbahce gets back in transition: who sprints back, who stops the ball, and any tendencies in early offense allowed._
+-->

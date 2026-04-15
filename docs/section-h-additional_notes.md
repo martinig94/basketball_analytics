@@ -1,4 +1,4 @@
-# <span class="section-badge">H</span> Final Remarks
+# <span class="section-badge">H</span> Additional Notes
 
 ## Overview
 

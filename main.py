@@ -13,6 +13,7 @@ from utils_euroleague import (
     clutch_stats,
     defense_stats_section,
     fastbreak_stats,
+    fastbreak_stats_defense,
     get_ranking,
     key_3p_shooters,
     key_midrange_shooters,
@@ -184,6 +185,11 @@ update_table_in_file(
     "docs/section-e-transition-play.md",
     fastbreak_stats(shots),
     "FASTBREAK-STATS",
+)
+update_table_in_file(
+    "docs/section-e-transition-play.md",
+    fastbreak_stats_defense(shots_raw, box, TEAM),
+    "FASTBREAK-STATS_DEFENSE",
 )
 
 # ── section-f-special-situations.md ──────────────────────────────────────────

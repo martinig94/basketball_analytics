@@ -65,8 +65,16 @@ _Describe their primary baseline out-of-bounds action: screen configuration, who
 ---
 
 ### Sideline (SLOB)
+![alt text](images/SLOB_1.png)
+Legend:   
+1: Wade Baldwin Iv  
+2: Devon Hall  
+3: Tarik Biberovic  
+4: Bonzie Colson   
+5: Khem Birch  
 
 _Describe their primary sideline out-of-bounds action._
 
 !!! danger "Coverage"
-    _How to defend this SLOB._
+    * 1st option: Defender on tarik Biberovic shouldn't allow the player to curl on the pin down  
+    * 2nd option: Defender on Wade Baldwin Iv should stunt on the Biberovic drive  
