@@ -14,7 +14,8 @@ To compute the following statistics, only games with a score difference < 10 poi
 <!-- END_TABLE CLUTCH-STATS -->
 
 !!! info "Clutch Identity"
-    _Summarize how Fenerbahçe behaves in late-game situations: do they go iso, run sets, push pace, or slow down?_
+    Horton Tucker is the primary clutch scorer (56 pts). Need defensive discipline + execution.  
+    Horton Tucker and Baldwin often play iso situations.
 
 ---
 ## Last-Minute Shooters
