@@ -6,7 +6,7 @@ To compute the following statistics, only games with a score difference < 10 poi
 | Metric                | Value                              |
 |:----------------------|:-----------------------------------|
 | Clutch games          | 22                                 |
-| Record                | 14 — 8                             |
+| Record (W-L)          | 14 — 8                             |
 | Clutch FG%            | 44.5%  (61/137)                    |
 | Clutch 3P%            | 29.2%  (21/72)                     |
 | Clutch Points / Game  | 10.2                               |
