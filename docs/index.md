@@ -9,10 +9,10 @@
 ---
 
 !!! info "Report Details"
-    **Prepared by:** Giulia Martini  
+    **Prepared by:** Giulia Martini. Check [here](martinig94.github.io/about_me/). my personal page
     **Date:** {{ today }}  
     **Analysis Period:** Season {{ season }}  
     This report is prepared analyzing the data from the EuroLeague {{ season }} season in a programmatic way.  
-    Any plot and table are generated using Python, and the source code is available on [GitHub](https://github.com/martinig94/basketball_analytics).  
+    Any plot and table are generated using the Python programming language, they are totally custom, and the source code is available on [GitHub](https://github.com/martinig94/basketball_analytics).  
     Plots and tables can be regenerated for any team in the EuroLeague and any other season for which the data is available.
 
