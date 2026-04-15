@@ -44,16 +44,8 @@ _Describe how Fenerbahce defends transition: gaps in getting back, who they tend
 
 ### Transition Defense Statistics
 <!-- START_TABLE FASTBREAK-STATS_DEFENSE -->
-<<<<<<< Updated upstream
 | Stat                                    |   Value |
 |:----------------------------------------|--------:|
 | Opp. Fast Break Points Allowed / G      |     9.3 |
 | Transition Fouls Per Game leading to FT |     2.6 |
-=======
-| Stat | Value |
-|---|---|
-| Opp. Fast Break Points Allowed / G | _0.0_ |
-| Transition Fouls Per Game | _0.0_ |
-| Steals Per Game | _0.0_ |
->>>>>>> Stashed changes
 <!-- END_TABLE FASTBREAK-STATS_DEFENSE -->
