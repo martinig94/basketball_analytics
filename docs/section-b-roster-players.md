@@ -48,7 +48,7 @@
 !!! tip "Scouting Notes"
     * **Strengths**: Explosive first step, elite in isolation and PnR; creates own shot late clock
     * **Tendencies**: Heavy right-hand driver; prefers going right out of high PnR; pull-up jumper after 1–2 dribbles
-    * **Preferred spots**: Top of the key, right wing; mid-range pull-up area
+    * **Preferred spots**: Top of the key; mid-range pull-up area
     * **Physicality**: Very physical guard, absorbs contact well, finishes through bodies
     * **Handedness**: Right-handed  
     * **How to defend**:
@@ -121,7 +121,7 @@
 !!! tip "Scouting Notes"
     * **Strengths**: Shooting, floor spacing, off-ball movement  
     * **Tendencies**: Catch-and-shoot, relocates well, quick trigger  
-    * **Preferred spots**: Corners and wings (left side slightly preferred)  
+    * **Preferred spots**: Corners and wings
     * **Physicality**: Not very physical; more finesse player   
     * **Handedness**: Right-handed  
     * **How to defend**:  
@@ -193,7 +193,7 @@
 !!! tip "Scouting Notes"
     * **Strengths**: High IQ, passing, spacing (stretch big), defensive versatility  
     * **Tendencies**: Facilitator from high post; pick-and-pop threat; quick decision-maker  
-    * **Preferred spots**: Top of the key, elbows, above-the-break 3  
+    * **Preferred spots**: Top of the key, elbows  
     * **Physicality**: Physical and smart defender, strong positioning  
     * **Handedness**: Right-handed  
     * **How to defend**:  
