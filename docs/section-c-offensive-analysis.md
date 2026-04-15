@@ -88,9 +88,14 @@ Top shooters by attempts-per-game for a given set of zones. In the `Primary zone
 ![alt text](images/player_PIR.png)
 ## Primary Offensive Entries
 
-### Entry 1 — _Name / Label_
+Fenerbahce runs an extensive and highly structured playbook.
+The common thread across nearly all sets is the pick-and-roll as the primary action or continuation, with most plays designed to either create a clean PnR read for Baldwin IV or isolate Horton-Tucker in 1-on-1 situations.
+Jasikevičius also maintains a dedicated set of late-clock adjustments (Spain, Flare), reinforcing that this is a system built for execution and half-court control rather than improvisation.
 
-_Describe the play: ball movement, screens, options, and who typically finishes._
+### Entry 1 — Flat Double
+Mianly played Horton-Tucker, sometimes by Baldwin IV
+![alt text](images/play_1.png)
+
 
 !!! danger "Defensive Priority"
     _How to stop this entry — switching rules, help coverage, communication keys._
@@ -107,12 +112,12 @@ _Describe the play: ball movement, screens, options, and who typically finishes.
 
 ---
 
-### Entry 3 — _Name / Label_
+### Entry 3 — Spanish Pick & Roll
 
-_Describe the play: ball movement, screens, options, and who typically finishes._
-
+Spanish Pick and Roll between Horton-Tucker, Birch and Colson to free Colson for a uncontested 3PT shot (3PT FG >50%)
+![alt text](images/play_3.png)
 !!! danger "Defensive Priority"
-    _How to stop this entry._
+    Don't switch on the first screen (Colson for Birch), defender on POA is aggressive on the ball to slow down the ball. 
 
 
 ## Pick & Roll Offense

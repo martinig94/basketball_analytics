@@ -33,14 +33,16 @@ _Describe how Fenerbahçe protects a lead: ball security, clock management, foul
 
 ### Tied or Trailing (Last 2 Minutes)
 
-_Describe how Fenerbahçe attacks when tied or behind: primary play caller, go-to option, screening actions used._
+When tied or trailing, Fenerbahce relies on their primary scorers: Horton-Tucker in 1-on-1 situations and Baldwin IV in ISO actions.
+Defensively, they apply on-ball pressure and double the ball-handler to force turnovers. 
 
+<!--
 | Situation | Primary Option | Secondary Option | Key Screener |
 |---|---|---|---|
 | Down 1–3 pts | _Player_ | _Player_ | _Player_ |
 | Down 4–6 pts | _Player_ | _Player_ | _Player_ |
 | Tied | _Player_ | _Player_ | _Player_ |
-
+-->
 ---
 
 ## Second Half Opening Plays
