@@ -29,7 +29,7 @@ _Describe how Fenerbahce pushes in transition: primary runners, outlet passer, t
 ---
 
 ## Defensive Transition
-
+<!--
 _Describe how Fenerbahce defends transition: gaps in getting back, who they tend to leave open, and how to exploit early offense opportunities._
 
 ### Transition Defense Vulnerabilities
@@ -39,7 +39,7 @@ _Describe how Fenerbahce defends transition: gaps in getting back, who they tend
 
 !!! success "Exploit — Secondary Break"
     _Describe how to attack their secondary transition defense._
-
+-->
 ---
 
 ### Transition Defense Statistics
