@@ -98,8 +98,7 @@ Mianly played Horton-Tucker, sometimes by Baldwin IV
 
 
 !!! danger "Defensive Priority"
-    _How to stop this entry — switching rules, help coverage, communication keys._
-
+    Force the ball handler to play with their weak hand, slow them down to prevent them reaching full screen and attacking the rim.
 
 
 ### Entry 2 — _Name / Label_
