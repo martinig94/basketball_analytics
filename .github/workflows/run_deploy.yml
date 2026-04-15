@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-  schedule:
-    - cron: '0 8 * * *'  # 9:00, 12:00, 18:00 Rome time
   workflow_dispatch:
 
 permissions:
