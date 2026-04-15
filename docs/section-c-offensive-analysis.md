@@ -93,7 +93,7 @@ The common thread across nearly all sets is the pick-and-roll as the primary act
 Jasikevičius also maintains a dedicated set of late-clock adjustments (Spain, Flare), reinforcing that this is a system built for execution and half-court control rather than improvisation.
 
 ### Entry 1 — Flat Double
-Mianly played Horton-Tucker, sometimes by Baldwin IV
+Mainly played Horton-Tucker, sometimes by Baldwin IV
 ![alt text](images/play_1.png)
 
 

@@ -9,7 +9,7 @@
 ---
 
 !!! info "Report Details"
-    **Prepared by:** Giulia Martini. Check [here](martinig94.github.io/about_me/) to check my personal page.  
+    **Prepared by:** Giulia Martini. Check [here](https://martinig94.github.io/about_me/) to check my personal page.  
     **Date:** {{ today }}  
     **Analysis Period:** Season {{ season }}  
     This report is prepared analyzing the data from the EuroLeague {{ season }} season in a programmatic way.  
