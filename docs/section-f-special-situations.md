@@ -20,18 +20,22 @@ To compute the following statistics, only games with a score difference < 10 poi
 ---
 ## Last-Minute Shooters
 ![alt text](images/eoq_image.png)
+
+
 ## Last-Minute Play Tendencies
 
 ### With Lead (Last 2 Minutes)
 
-_Describe how Fenerbahçe protects a lead: ball security, clock management, foul avoidance, defensive assignments._
+When protecting a lead, Fenerbahçe relies on Baldwin IV to handle the ball and manage the clock, prioritizing possession security over shot creation.
+They avoid putting the ball in the hands of poor free-throw shooters and switch to a more physical man-to-man defense, trusting Melli and Birch to protect the paint and limit second chances.
 
 !!! danger "Attack Their Lead Protection"
-    _When down late, describe how to attack their tendency (e.g., trap the ball-handler, foul specific players)._
-
+    When down late, foul strategically — avoid Baldwin IV (solid FT shooter) and target **Birch** or **Bacot Jr.** on the offensive glass.
+    Apply ball pressure on Baldwin to force clock mismanagement and consider trapping him in the corners to generate turnovers.
+    Push pace on every dead ball to prevent Fenerbahçe from setting their defensive scheme.
 ---
 
-### Tied or Trailing (Last 2 Minutes)
+## Tied or Trailing (Last 2 Minutes)
 
 When tied or trailing, Fenerbahce relies on their primary scorers: Horton-Tucker in 1-on-1 situations and Baldwin IV in ISO actions.
 Defensively, they apply on-ball pressure and double the ball-handler to force turnovers. 
@@ -42,7 +46,7 @@ Defensively, they apply on-ball pressure and double the ball-handler to force tu
 | Down 1–3 pts | _Player_ | _Player_ | _Player_ |
 | Down 4–6 pts | _Player_ | _Player_ | _Player_ |
 | Tied | _Player_ | _Player_ | _Player_ |
--->
+
 ---
 
 ## Second Half Opening Plays
@@ -59,8 +63,14 @@ _Describe typical plays Fenerbahçe runs to open the second half or at the start
 ## Out-of-Bounds Plays
 
 ### Baseline (BLOB)
-
-_Describe their primary baseline out-of-bounds action: screen configuration, who receives, and finish options._
+Stagger Flare
+![alt text](images/BLOB_1.png)
+Legend:   
+1: Bonzie Colson/ Tarik Biberovic   
+2: Devon Hall  
+3: Wade Baldwin Iv/ Arturs Zagars   
+4: Khem Birch    
+5: Nicolo Melli 
 
 !!! danger "Coverage"
     _How to defend this BLOB._
@@ -76,8 +86,6 @@ Legend:
 4: Bonzie Colson   
 5: Khem Birch  
 
-_Describe their primary sideline out-of-bounds action._
-
 !!! danger "Coverage"
-    * 1st option: Defender on tarik Biberovic shouldn't allow the player to curl on the pin down  
+    * 1st option: Defender on Tarik Biberovic shouldn't allow the player to curl on the pin down  
     * 2nd option: Defender on Wade Baldwin Iv should stunt on the Biberovic drive  

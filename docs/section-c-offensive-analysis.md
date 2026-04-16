@@ -86,6 +86,15 @@ Top shooters by attempts-per-game for a given set of zones. In the `Primary zone
 ---
 ## Players Efficiency
 ![alt text](images/player_PIR.png)
+![alt text](images/player_pr_ts.png)
+
+**Player Efficiency Highlights**
+
+- **Baldwin IV** (PIR 16.8) and **Horton-Tucker** (PIR 14.6) are the offensive engines — high usage but only average shooting efficiency (~55–57% TS%)
+- **De Colo** (PIR 10.9, TS% ~74%) and **Colson** (PIR 9.6, TS% ~67%) are the most shooting-efficient contributors
+- **Biberovic** and **Melli** are reliable secondary options — solid PIR and above-average TS%
+- **Hall** and **Bacot Jr.** show below-average TS% relative to their minutes
+- Bench players (Birsen, Bitim, Zagars) contribute limited offensive impact
 ## Primary Offensive Entries
 
 Fenerbahce runs an extensive and highly structured playbook.
@@ -96,24 +105,26 @@ Jasikevičius also maintains a dedicated set of late-clock adjustments (Spain, F
 Mainly played Horton-Tucker, sometimes by Baldwin IV
 ![alt text](images/play_1.png)
 
-
 !!! danger "Defensive Priority"
     Force the ball handler to play with their weak hand, slow them down to prevent them reaching full screen and attacking the rim.
 
 
 ### Entry 2 — _Name / Label_
 
-_Describe the play: ball movement, screens, options, and who typically finishes._
+![alt text](images/play_2.png)
+Legend:  
+1: Wade Baldwin Iv  
+2: Devon Hall  
+3: Tarik Biberovic  
+4: Nicolo Melli   
+5: Khem Birch  
 
 !!! danger "Defensive Priority"
-    _How to stop this entry._
-
-
----
+    Be physical on Tarik Biberovic to disrupt timing. Chase him before he receives the ball and edge on the p&R to slow him down.
 
 ### Entry 3 — Spanish Pick & Roll
 
-Spanish Pick and Roll between Horton-Tucker, Birch and Colson to free Colson for a uncontested 3PT shot (3PT FG >50%)
+Spanish Pick and Roll between Horton-Tucker, Birch, and Colson to free Colson for a uncontested 3PT shot (3PT FG >50%)
 ![alt text](images/play_3.png)
 !!! danger "Defensive Priority"
     Don't switch on the first screen (Colson for Birch), defender on POA is aggressive on the ball to slow down the ball. 
