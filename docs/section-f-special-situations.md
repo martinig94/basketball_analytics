@@ -55,7 +55,7 @@ _Describe typical plays Fenerbahçe runs to open the second half or at the start
 | Q4 Open | _Play Name_ | _Player_ |
 
 ---
-
+-->
 ## Out-of-Bounds Plays
 
 ### Baseline (BLOB)

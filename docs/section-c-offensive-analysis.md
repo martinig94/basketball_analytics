@@ -5,7 +5,7 @@
 **Offensive philosophy**
 
 - Structured, execution-heavy offense under Šarūnas Jasikevičius
-- Emphasis on fundamentals: shot selection, rebounding, low turnovers
+- Emphasis on fundamentals: shot selection, rebounding.
 - Mix of half-court creation and physical play rather than pure flow
 
 **Pace**

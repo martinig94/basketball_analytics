@@ -5,6 +5,20 @@
 Beyond standard team and player profiling, additional quantitative analysis can be conducted to support scouting, game preparation, and in-game adjustments. These metrics focus on **lineups interaction**, **player synergy**, and **high-leverage possessions**, providing deeper insight into performance beyond traditional box score indicators.
 
 ---
+## Matchup Analysis
+Detailed analysis of opponents (Team X) and their performance in the previous matchups during the current season.
+
+Key outputs:
+- Head-to-head record and score differentials in prior meetings
+- Team-level offensive and defensive rating in the specific matchup vs Team X
+- Shooting splits (FG%, 3P%, FT%) for both teams in head-to-head games
+- Points allowed by zone vs Team X — where did Team X score most efficiently?
+- Turnover and rebounding differentials in prior matchups
+- Individual player performance vs Team X: points, efficiency, usage rate changes
+- Which offensive sets / play families Fenerbahce ran most frequently against Team X
+- How Fenerbahce defended Team X's primary actions (PnR coverage used, switching tendencies, help rotations)
+- Players who over- or under-performed their season averages in the matchup
+- Clutch-time execution in prior head-to-head meetings
 
 ## Lineups Analysis
 
