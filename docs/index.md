@@ -14,4 +14,3 @@
     **Analysis Period:** Season {{ season }}   
     This report and all its contents — data analysis, plots, and tables — were independently developed and produced by the author using Python.
     The entire pipeline is custom-built and available on [GitHub](https://github.com/martinig94/basketball_analytics). , and can be fully regenerated for any EuroLeague team or season on demand.
-    This report is prepared analyzing the data from the EuroLeague {{ season }} season in a programmatic way.  
