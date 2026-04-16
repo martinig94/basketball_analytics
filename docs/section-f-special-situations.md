@@ -35,7 +35,7 @@ They avoid putting the ball in the hands of poor free-throw shooters and switch 
     Push pace on every dead ball to prevent Fenerbahçe from setting their defensive scheme.
 ---
 
-## Tied or Trailing (Last 2 Minutes)
+### Tied or Trailing (Last 2 Minutes)
 
 When tied or trailing, Fenerbahce relies on their primary scorers: Horton-Tucker in 1-on-1 situations and Baldwin IV in ISO actions.
 Defensively, they apply on-ball pressure and double the ball-handler to force turnovers. 
