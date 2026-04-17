@@ -86,7 +86,7 @@ Top shooters by attempts-per-game for a given set of zones. In the `Primary zone
 ---
 ## Players Efficiency
 ![alt text](images/player_PIR.png)
-![alt text](images/player_pr_ts.png)
+![alt text](images/player_pir_ts.png)
 
 **Player Efficiency Highlights**
 
@@ -109,7 +109,7 @@ Mainly played Horton-Tucker, sometimes by Baldwin IV
     Force the ball handler to play with their weak hand, slow them down to prevent them reaching full screen and attacking the rim.
 
 
-### Entry 2 — _Name / Label_
+### Entry 2 
 
 ![alt text](images/play_2.png)
 Legend:  
