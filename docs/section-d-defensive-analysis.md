@@ -94,13 +94,13 @@
 <!-- START_TABLE DEFENSE-STATS-5 -->
 | Stat                 | Value   | Context           |
 |:---------------------|:--------|:------------------|
-| Opp. Points Per Game | 88.0    | Season avg: 80.7  |
+| Opp. Points Per Game | 84.4    | Season avg: 80.6  |
 | Opp. FG%             | 49.8%   | Season avg: 44.2% |
-| Opp. 3-Point %       | 45.0%   | Season avg: 32.7% |
-| Defensive Rebounds   | 18.4    | Season avg: 22.2  |
-| Forced Turnovers     | 13.0    | Season avg: 10.9  |
-| Blocks               | 3.6     | Season avg: 2.8   |
-| Steals               | 6.2     | Season avg: 5.2   |
+| Opp. 3-Point %       | 39.4%   | Season avg: 32.1% |
+| Defensive Rebounds   | 18.8    | Season avg: 22.2  |
+| Forced Turnovers     | 12.8    | Season avg: 11.0  |
+| Blocks               | 3.8     | Season avg: 2.8   |
+| Steals               | 6.0     | Season avg: 5.2   |
 <!-- END_TABLE DEFENSE-STATS-5 -->
 ---
 
