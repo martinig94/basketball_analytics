@@ -37,12 +37,12 @@
 <!-- START_TABLE PLAYER-1-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
 |:---------|:-------------|:-------------|
-| Points   | 14.4         | 14.8         |
+| Points   | 14.4         | 13.6         |
 | Rebounds | 3.2          | 2.2          |
-| Assists  | 5.5          | 5.0          |
-| FG%      | 45.8%        | 44.4%        |
-| 3P%      | 27.7%        | 18.2%        |
-| Minutes  | 26.0         | 27.2         |
+| Assists  | 5.5          | 5.4          |
+| FG%      | 45.8%        | 40.7%        |
+| 3P%      | 27.7%        | 23.1%        |
+| Minutes  | 26.0         | 27.3         |
 <!-- END_TABLE PLAYER-1-STATS -->
 
 !!! tip "Scouting Notes"
@@ -74,12 +74,12 @@
 <!-- START_TABLE PLAYER-2-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
 |:---------|:-------------|:-------------|
-| Points   | 8.6          | 6.8          |
-| Rebounds | 3.0          | 3.2          |
-| Assists  | 2.7          | 2.5          |
-| FG%      | 41.2%        | 35.7%        |
+| Points   | 8.6          | 6.2          |
+| Rebounds | 3.0          | 3.0          |
+| Assists  | 2.7          | 2.2          |
+| FG%      | 41.2%        | 37.9%        |
 | 3P%      | 25.8%        | 21.4%        |
-| Minutes  | 24.9         | 24.2         |
+| Minutes  | 24.9         | 22.7         |
 <!-- END_TABLE PLAYER-2-STATS -->
 
 !!! tip "Scouting Notes"
@@ -146,12 +146,12 @@
 <!-- START_TABLE PLAYER-4-STATS -->
 | Stat     | Season Avg   | Last 5 Avg   |
 |:---------|:-------------|:-------------|
-| Points   | 15.7         | 13.0         |
-| Rebounds | 3.8          | 4.5          |
-| Assists  | 1.9          | 1.5          |
-| FG%      | 48.5%        | 36.8%        |
-| 3P%      | 29.0%        | 19.0%        |
-| Minutes  | 23.7         | 25.4         |
+| Points   | 15.7         | 12.4         |
+| Rebounds | 3.8          | 4.0          |
+| Assists  | 1.9          | 2.4          |
+| FG%      | 48.5%        | 37.3%        |
+| 3P%      | 29.0%        | 15.4%        |
+| Minutes  | 23.7         | 25.3         |
 <!-- END_TABLE PLAYER-4-STATS -->
 
 !!! tip "Scouting Notes"
