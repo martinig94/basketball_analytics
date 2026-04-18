@@ -48,6 +48,8 @@ write_team_css(TEAM, "docs/stylesheets/extra.css")
 games = load_gamecodes(SEASON, TEAM)
 games_all = load_gamecodes(SEASON)
 games = add_winner_team(games)
+games = games[games["Round"] != 38]
+games_all = games_all[games_all["Round"] != 38]
 box = load_or_fetch_boxscores(
     games, season=SEASON, team=TEAM, file_name="fenerbahce_boxscores_2025_26.csv"
 )
