@@ -50,20 +50,25 @@ games_all = load_gamecodes(SEASON)
 games = add_winner_team(games)
 games = games[games["Round"] != 38]
 games_all = games_all[games_all["Round"] != 38]
+valid_gamecodes = set(games["gameCode"])
 box = load_or_fetch_boxscores(
     games, season=SEASON, team=TEAM, file_name="fenerbahce_boxscores_2025_26.csv"
 )
+box = box[box["Gamecode"].isin(valid_gamecodes)]
 box_all = load_or_fetch_boxscores(
     games, season=SEASON, file_name="boxscore_2025.csv"
 )
+box_all = box_all[box_all["Gamecode"].isin(valid_gamecodes)]
 shots_raw = load_or_fetch_shots(
     games=games, season=SEASON, cache_path="fenerbahce_shots_2025_26.csv"
 )
+shots_raw = shots_raw[shots_raw["Gamecode"].isin(valid_gamecodes)]
 shots = remap_zones(
     load_or_fetch_shots(
         games=games, team=TEAM, season=SEASON, cache_path="fenerbahce_shots_2025_26.csv"
     )
 )
+shots = shots[shots["Gamecode"].isin(valid_gamecodes)]
 
 # ── section-a-general-information.md ─────────────────────────────────────────
 
