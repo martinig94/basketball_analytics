@@ -1628,7 +1628,7 @@ def get_ranking(season: int, team:str):
     stan = Standings("E")
     all_games = stan.get_gamecodes_season(season=season)
     last_round = all_games["Round"].max()
-    ranking = stan.get_standings(season=season, round_number=last_round)
+    ranking = stan.get_standings(season=season, round_number=37)
     ranking_team = ranking[ranking['club.code'] == team]
     return ranking_team[['position', 'positionChange', 'gamesPlayed',
        'qualified', 'pointsDifference', 'lastTenRecord', 'last5Form']]
